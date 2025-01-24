@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @ConfigurationPropertiesScan(basePackages = {"org.example.carrier.global.config.properties"})
 @Configuration
-public class ConfigurationConfig {
+public class PropertiesConfig {
 }

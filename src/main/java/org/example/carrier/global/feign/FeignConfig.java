@@ -1,7 +1,6 @@
-package org.example.carrier.global.config;
+package org.example.carrier.global.feign;
 
 import feign.codec.ErrorDecoder;
-import org.example.carrier.global.feign.FeignClientErrorDecoder;
 import org.example.carrier.global.interceptor.ContentLengthRequestInterceptor;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;

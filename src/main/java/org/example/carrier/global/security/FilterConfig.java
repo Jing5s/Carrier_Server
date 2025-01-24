@@ -1,4 +1,4 @@
-package org.example.carrier.global.config;
+package org.example.carrier.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
