@@ -14,6 +14,9 @@ public enum ErrorCode {
     EXPIRED_JWT_TOKEN(401, "Expired Jwt Token"),
     INVALID_JWT_TOKEN(401, "Invalid Jwt Token"),
 
+    // auth
+    INVALID_AUTH_TOKEN(400, "Invalid Auth Token"),
+
     // server
     INTERNAL_SERVER_ERROR(500, "Internal server error");
 

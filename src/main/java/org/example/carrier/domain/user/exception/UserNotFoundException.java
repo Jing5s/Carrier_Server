@@ -1,6 +1,5 @@
 package org.example.carrier.domain.user.exception;
 
-
 import org.example.carrier.global.error.exception.ErrorCode;
 import org.example.carrier.global.error.exception.GlobalException;
 
