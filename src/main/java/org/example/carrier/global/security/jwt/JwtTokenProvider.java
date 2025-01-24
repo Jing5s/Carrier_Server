@@ -38,7 +38,7 @@ public class JwtTokenProvider {
     public String createRefreshToken(String email) {
         String token = createToken(email, REFRESH_KEY, jwtProperties.getRefreshTime());
         refreshTokenRepository.save(
-                new RefreshToken(token, email)
+                new RefreshToken(email, token)
         );
         return token;
     }
