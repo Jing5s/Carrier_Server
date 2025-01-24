@@ -7,8 +7,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.carrier.domain.user.domain.Token;
-import org.example.carrier.domain.user.domain.repository.TokenRepository;
+import org.example.carrier.domain.user.domain.RefreshToken;
+import org.example.carrier.domain.user.domain.repository.RefreshTokenRepository;
 import org.example.carrier.global.config.properties.JwtProperties;
 import org.example.carrier.global.security.auth.AuthDetailsService;
 import org.example.carrier.global.security.exception.ExpiredJwtTokenException;
@@ -25,7 +25,7 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
     private final AuthDetailsService authDetailsService;
-    private final TokenRepository tokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     private static final String ACCESS_KEY = "access_token";
     private static final String REFRESH_KEY = "refresh_token";
@@ -35,10 +35,10 @@ public class JwtTokenProvider {
     }
 
     @Transactional
-    public String createRefreshToken(String email, String googleAccessToken) {
+    public String createRefreshToken(String email) {
         String token = createToken(email, REFRESH_KEY, jwtProperties.getRefreshTime());
-        tokenRepository.save(
-                new Token(token, email, googleAccessToken)
+        refreshTokenRepository.save(
+                new RefreshToken(token, email)
         );
         return token;
     }
