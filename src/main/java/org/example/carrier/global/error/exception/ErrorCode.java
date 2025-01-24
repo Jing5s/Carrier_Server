@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ErrorCode {
 
+    // user
+    USER_NOT_FOUND(404, "User Not Found."),
+
     // server
     INTERNAL_SERVER_ERROR(500, "Internal server error");
 
