@@ -6,19 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RedisHash(value = "refreshToken")
-public class RefreshToken {
+public class Token {
     @Id
-    private String token;
-
     private String email;
 
+    @Indexed
+    private String refreshToken;
+
+    private String authAccessToken;
+
     @Builder
-    public RefreshToken(String token, String email) {
-        this.token = token;
+    public Token(String email, String refreshToken, String authAccessToken) {
         this.email = email;
+        this.refreshToken = refreshToken;
+        this.authAccessToken = authAccessToken;
     }
 }

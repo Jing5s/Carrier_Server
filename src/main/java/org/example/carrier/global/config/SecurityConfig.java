@@ -43,7 +43,8 @@ public class SecurityConfig {
         http
             .cors(Customizer.withDefaults())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/auth").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/auth").permitAll()
+                    .requestMatchers("/auth/signIn").permitAll()
                 .anyRequest().authenticated()
             );
 

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,12 @@ public class User {
 
     @Column(name = "refresh_token", nullable = false)
     private String googleRefreshToken;
+
+    @Builder
+    public User(String email, String nickname, String picture, String googleRefreshToken) {
+        this.email = email;
+        this.nickname = nickname;
+        this.picture = picture;
+        this.googleRefreshToken = googleRefreshToken;
+    }
 }

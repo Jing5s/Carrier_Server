@@ -1,0 +1,12 @@
+package org.example.carrier.domain.user.domain.repository;
+
+import org.example.carrier.domain.user.domain.Token;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface TokenRepository extends CrudRepository<Token, String> {
+    Optional<Token> findByEmail(String email);
+}
