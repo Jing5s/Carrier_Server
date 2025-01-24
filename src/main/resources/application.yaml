@@ -24,12 +24,11 @@ spring:
       password: ${REDIS_PASSWORD}
 
 auth:
-  google:
-    base-url: ${BASE_URL}
-    client-id: ${CLIENT_ID}
-    client-secret: ${CLIENT_SECRET}
-    redirect-url: ${REDIRECT_URL}
-    scope: ${SCOPE}
+  base-url: ${BASE_URL}
+  client-id: ${CLIENT_ID}
+  client-secret: ${CLIENT_SECRET}
+  redirect-url: ${REDIRECT_URL}
+  scopes: ${SCOPES}
 
 jwt:
   access-time: ${JWT_ACCESS_TIME}

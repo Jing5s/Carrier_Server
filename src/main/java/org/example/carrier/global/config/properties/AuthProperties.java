@@ -12,5 +12,5 @@ public class AuthProperties {
     private final String clientId;
     private final String clientSecret;
     private final String redirectUrl;
-    private final String[] scope;
+    private final String[] scopes;
 }
