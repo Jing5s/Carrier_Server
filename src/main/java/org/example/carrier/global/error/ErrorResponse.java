@@ -1,16 +1,17 @@
 package org.example.carrier.global.error;
 
-import lombok.Builder;
-import lombok.Getter;
+import org.example.carrier.global.error.exception.ErrorCode;
 
-@Getter
-public class ErrorResponse {
-    private final int status;
-    private final String message;
-
-    @Builder
-    ErrorResponse(int status, String message) {
-        this.status = status;
-        this.message = message;
+public record ErrorResponse(
+        int status,
+        String code,
+        String message
+) {
+    public ErrorResponse(ErrorCode errorCode) {
+        this(
+                errorCode.getStatus(),
+                errorCode.getCode(),
+                errorCode.getMessage()
+        );
     }
 }

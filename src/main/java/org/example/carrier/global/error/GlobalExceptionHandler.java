@@ -22,10 +22,7 @@ public class GlobalExceptionHandler {
         final ErrorCode errorCode = e.getErrorCode();
 
         return new ResponseEntity<>(
-                ErrorResponse.builder()
-                        .status(errorCode.getStatus())
-                        .message(errorCode.getMessage())
-                        .build(),
+                new ErrorResponse(errorCode),
                 HttpStatus.valueOf(errorCode.getStatus())
         );
     }
