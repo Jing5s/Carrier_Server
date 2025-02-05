@@ -20,6 +20,7 @@ public record AddScheduleRequest(
         @NotEmpty(message = "category이 비어있습니다.")
         Long categoryId,
 
+        @NotEmpty(message = "startDate가 비어있습니다.")
         LocalDateTime startDate,
 
         LocalDateTime endDate,

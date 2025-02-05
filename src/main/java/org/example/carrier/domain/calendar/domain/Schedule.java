@@ -34,7 +34,7 @@ public class Schedule {
     @Column(nullable = false)
     private Boolean repeat;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
     @Column(name = "end_date")
