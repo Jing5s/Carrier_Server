@@ -14,8 +14,8 @@ public record AddScheduleRequest(
         @NotEmpty(message = "allDay가 비어있습니다.")
         Boolean allDay,
 
-        @NotEmpty(message = "repeat이 비어있습니다.")
-        Boolean repeat,
+        @NotEmpty(message = "isRepeat이 비어있습니다.")
+        Boolean isRepeat,
 
         @NotEmpty(message = "category이 비어있습니다.")
         Long categoryId,
@@ -31,7 +31,7 @@ public record AddScheduleRequest(
         return Schedule.builder()
                 .title(title)
                 .allDay(allDay)
-                .repeat(repeat)
+                .isRepeat(isRepeat)
                 .startDate(startDate)
                 .endDate(endDate)
                 .location(location)

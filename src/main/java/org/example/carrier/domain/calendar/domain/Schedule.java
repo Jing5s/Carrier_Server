@@ -31,8 +31,8 @@ public class Schedule {
     @Column(name = "all_day", nullable = false)
     private Boolean allDay;
 
-    @Column(nullable = false)
-    private Boolean repeat;
+    @Column(name = "is_repeat", nullable = false)
+    private Boolean isRepeat;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
@@ -56,7 +56,7 @@ public class Schedule {
     @Builder
     public Schedule(String title,
                     Boolean allDay,
-                    Boolean repeat,
+                    Boolean isRepeat,
                     LocalDateTime startDate,
                     LocalDateTime endDate,
                     String location,
@@ -65,7 +65,7 @@ public class Schedule {
                     Category category) {
         this.title = title;
         this.allDay = allDay;
-        this.repeat = repeat;
+        this.isRepeat = isRepeat;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;

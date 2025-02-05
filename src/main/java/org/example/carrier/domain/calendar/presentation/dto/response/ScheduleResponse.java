@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public record ScheduleResponse(
         String title,
         Boolean allDay,
-        Boolean repeat,
+        Boolean isRepeat,
         LocalDateTime startDate,
         LocalDateTime endDate,
         CategoryResponse category
@@ -15,7 +15,7 @@ public record ScheduleResponse(
     public ScheduleResponse(Schedule schedule) {
         this(
                 schedule.getTitle(), schedule.getAllDay(),
-                schedule.getRepeat(), schedule.getStartDate(),
+                schedule.getIsRepeat(), schedule.getStartDate(),
                 schedule.getEndDate(), new CategoryResponse(schedule.getCategory())
         );
     }
