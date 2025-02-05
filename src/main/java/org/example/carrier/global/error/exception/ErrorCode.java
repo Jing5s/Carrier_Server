@@ -10,6 +10,9 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND(404, "USER-404-1", "User Not Found."),
 
+    // category
+    CATEGORY_NOT_FOUND(404, "CATEGORY-404-1", "Category Not Found."),
+
     // jwt
     EXPIRED_JWT_TOKEN(401, "JWT-401-1", "Expired Jwt Token"),
     INVALID_JWT_TOKEN(401, "JWT-401-2", "Invalid Jwt Token"),
