@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.carrier.domain.user.domain.User;
+import org.example.carrier.global.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "tbl_schedule")
-public class Schedule {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Schedule extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
