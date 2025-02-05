@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class GenerateOAuthLinkService {
+public class QueryAuthService {
     private final AuthProperties properties;
 
-    public String execute() {
+    public String getOAuthLink() {
         String scopeParam = String.join(" ", properties.getScopes());
 
         return String.format(

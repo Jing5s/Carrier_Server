@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class AddScheduleService {
+public class CommandScheduleService {
     private final CategoryRepository categoryRepository;
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public void execute(@Valid AddScheduleRequest request, User cUser) {
+    public void createSchedule(@Valid AddScheduleRequest request, User cUser) {
         Category category = categoryRepository.findById(request.categoryId())
                 .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
 

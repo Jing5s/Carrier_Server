@@ -11,11 +11,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ListCategoryService {
+public class QueryCategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryResponse> execute(User cuser) {
+    public List<CategoryResponse> getCategories(User cuser) {
         return categoryRepository.findAllByUser(cuser).stream()
                 .map(CategoryResponse::new)
                 .toList();

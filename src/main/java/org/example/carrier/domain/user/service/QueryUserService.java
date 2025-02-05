@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class GetUserProfileService {
+public class QueryUserService {
 
-    public UserProfileResponse execute(User cuser) {
+    public UserProfileResponse getUserInfo(User cuser) {
         return new UserProfileResponse(cuser);
     }
 }

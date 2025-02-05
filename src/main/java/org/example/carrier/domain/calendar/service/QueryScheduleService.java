@@ -16,12 +16,12 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ListScheduleService {
+public class QueryScheduleService {
     private final CategoryRepository categoryRepository;
     private final CustomScheduleRepository customScheduleRepository;
 
     @Transactional(readOnly = true)
-    public List<ScheduleResponse> execute(@Valid FindCategoryRequest request, User cUser) {
+    public List<ScheduleResponse> getSchedule(@Valid FindCategoryRequest request, User cUser) {
         List<Category> categories = request.categoryIds().stream()
                 .map(id -> categoryRepository.findById(id)
                         .orElseThrow(() -> CategoryNotFoundException.EXCEPTION))

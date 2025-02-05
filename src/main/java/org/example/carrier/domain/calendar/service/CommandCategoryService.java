@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class AddCategoryService {
+public class CommandCategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void execute(@Valid AddCategoryRequest request) {
+    public void createCategory(@Valid AddCategoryRequest request) {
         categoryRepository.save(request.toCategory());
     }
 }
