@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetUserProfileService {
 
-    public UserProfileResponse execute(User user) {
-        return new UserProfileResponse(user);
+    public UserProfileResponse execute(User cuser) {
+        return new UserProfileResponse(cuser);
     }
 }

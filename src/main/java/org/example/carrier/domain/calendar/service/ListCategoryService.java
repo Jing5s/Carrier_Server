@@ -15,8 +15,8 @@ public class ListCategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryResponse> execute(User user) {
-        return categoryRepository.findAllByUser(user).stream()
+    public List<CategoryResponse> execute(User cuser) {
+        return categoryRepository.findAllByUser(cuser).stream()
                 .map(CategoryResponse::new)
                 .toList();
     }
