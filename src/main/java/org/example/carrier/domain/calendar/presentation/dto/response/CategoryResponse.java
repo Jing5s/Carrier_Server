@@ -4,10 +4,11 @@ import org.example.carrier.domain.calendar.domain.Category;
 import org.example.carrier.domain.calendar.domain.type.Color;
 
 public record CategoryResponse(
+        Long id,
         String name,
         Color color
 ) {
     public CategoryResponse(Category category) {
-        this(category.getName(), category.getColor());
+        this(category.getId(), category.getName(), category.getColor());
     }
 }
