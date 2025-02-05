@@ -1,9 +1,9 @@
 package org.example.carrier.domain.user.presentation.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 public record TokenRequest(
-        @NotNull(message = "token이 비어있습니다.")
+        @NotEmpty(message = "token이 비어있습니다.")
         String token
 ) {
 }
