@@ -1,6 +1,7 @@
 package org.example.carrier.domain.user.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.user.facade.UserFacade;
 import org.example.carrier.domain.user.presentation.dto.response.UserProfileResponse;
 import org.example.carrier.domain.user.service.GetUserProfileService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,6 @@ public class UserController {
 
     @GetMapping
     public UserProfileResponse getUserProfile() {
-        return getUserProfileService.execute();
+        return getUserProfileService.execute(UserFacade.getCurrentUser());
     }
 }

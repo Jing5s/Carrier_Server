@@ -2,23 +2,24 @@ package org.example.carrier.domain.user.facade;
 
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.domain.User;
-import org.example.carrier.domain.user.domain.repository.UserRepository;
 import org.example.carrier.domain.user.exception.UserNotFoundException;
+import org.example.carrier.global.security.auth.AuthDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Service
+@Component
 public class UserFacade {
-    private final UserRepository userRepository;
 
-    public User getCurrentUser() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUserByEmail(email);
-    }
+    public static User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
 
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-            .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+        if (principal instanceof AuthDetails) {
+            return ((AuthDetails) principal).getUser();
+        }
+
+        throw UserNotFoundException.EXCEPTION;
     }
 }
