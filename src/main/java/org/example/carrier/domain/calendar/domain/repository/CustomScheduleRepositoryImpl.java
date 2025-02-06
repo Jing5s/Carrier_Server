@@ -23,7 +23,7 @@ public class CustomScheduleRepositoryImpl implements CustomScheduleRepository {
                 .selectFrom(schedule)
                 .where(schedule.startDate.between(startDate, endDate)
                         .and(schedule.endDate.between(startDate, endDate))
-                        .and(schedule.user.eq(user))
+                        .and(schedule.user.eq(user).or(schedule.user.isNull()))
                         .and(schedule.category.in(categories)))
                 .fetch();
     }
