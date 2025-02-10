@@ -1,6 +1,7 @@
 package org.example.carrier.domain.calendar.presentation.dto.response;
 
 import org.example.carrier.domain.calendar.domain.Schedule;
+import org.example.carrier.domain.category.presentation.dto.response.CategoryResponse;
 
 import java.time.LocalDateTime;
 

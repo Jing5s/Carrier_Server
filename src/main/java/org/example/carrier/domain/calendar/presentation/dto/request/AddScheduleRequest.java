@@ -1,7 +1,7 @@
 package org.example.carrier.domain.calendar.presentation.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
-import org.example.carrier.domain.calendar.domain.Category;
+import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.calendar.domain.Schedule;
 import org.example.carrier.domain.user.domain.User;
 

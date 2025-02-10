@@ -1,4 +1,4 @@
-package org.example.carrier.domain.calendar.exception;
+package org.example.carrier.domain.category.domain.exception;
 
 import org.example.carrier.global.error.exception.ErrorCode;
 import org.example.carrier.global.error.exception.GlobalException;

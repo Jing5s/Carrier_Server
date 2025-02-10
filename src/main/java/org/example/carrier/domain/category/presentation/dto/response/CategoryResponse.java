@@ -1,7 +1,7 @@
-package org.example.carrier.domain.calendar.presentation.dto.response;
+package org.example.carrier.domain.category.presentation.dto.response;
 
-import org.example.carrier.domain.calendar.domain.Category;
-import org.example.carrier.domain.calendar.domain.type.Color;
+import org.example.carrier.domain.category.domain.Category;
+import org.example.carrier.domain.category.domain.type.Color;
 
 public record CategoryResponse(
         Long id,

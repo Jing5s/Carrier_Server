@@ -1,8 +1,8 @@
-package org.example.carrier.domain.calendar.presentation;
+package org.example.carrier.domain.category.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.carrier.domain.calendar.presentation.dto.response.CategoryResponse;
-import org.example.carrier.domain.calendar.service.QueryCategoryService;
+import org.example.carrier.domain.category.presentation.dto.response.CategoryResponse;
+import org.example.carrier.domain.category.service.QueryCategoryService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

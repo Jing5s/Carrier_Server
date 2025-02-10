@@ -1,9 +1,9 @@
-package org.example.carrier.domain.calendar.presentation;
+package org.example.carrier.domain.category.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.carrier.domain.calendar.presentation.dto.request.AddCategoryRequest;
-import org.example.carrier.domain.calendar.service.CommandCategoryService;
+import org.example.carrier.domain.category.presentation.dto.request.AddCategoryRequest;
+import org.example.carrier.domain.category.service.CommandCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

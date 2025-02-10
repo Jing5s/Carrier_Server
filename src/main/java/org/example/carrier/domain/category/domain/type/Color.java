@@ -1,4 +1,4 @@
-package org.example.carrier.domain.calendar.domain.type;
+package org.example.carrier.domain.category.domain.type;
 
 public enum Color {
     RED,
