@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import org.example.carrier.domain.todo.domain.type.Priority;
 import org.example.carrier.global.entity.BaseEntity;
 
+import java.time.LocalDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -19,14 +21,20 @@ public class Todo extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
-    private String memo;
+    @Column(nullable = false)
+    private LocalDate date;
 
     @Column(name = "is_repeat", nullable = false)
-    private boolean isRepeat;
+    private Boolean isRepeat;
+
+    @Column(nullable = false)
+    private Boolean isDone = false;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Priority priority;
+
+    private String memo;
 
     private String location;
 }
