@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
 import org.example.carrier.domain.user.presentation.dto.response.AccessTokenResponse;
 import org.example.carrier.domain.user.service.QueryAuthService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class QueryAuthController {
     }
 
     @PostMapping("/reissue")
+    @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissueToken(@Valid @RequestBody TokenRequest tokenRequest) {
         return queryAuthService.reissueToken(tokenRequest.token());
     }
