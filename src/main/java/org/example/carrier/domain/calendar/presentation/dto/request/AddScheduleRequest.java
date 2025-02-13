@@ -1,6 +1,7 @@
 package org.example.carrier.domain.calendar.presentation.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.calendar.domain.Schedule;
 import org.example.carrier.domain.user.domain.User;
@@ -11,10 +12,10 @@ public record AddScheduleRequest(
         @NotEmpty(message = "title이 비어있습니다.")
         String title,
 
-        @NotEmpty(message = "allDay가 비어있습니다.")
+        @NotNull(message = "allDay가 비어있습니다.")
         Boolean allDay,
 
-        @NotEmpty(message = "isRepeat이 비어있습니다.")
+        @NotNull(message = "isRepeat이 비어있습니다.")
         Boolean isRepeat,
 
         @NotEmpty(message = "category이 비어있습니다.")
