@@ -1,6 +1,9 @@
 package org.example.carrier.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.category.domain.Category;
+import org.example.carrier.domain.category.domain.repository.CategoryRepository;
+import org.example.carrier.domain.category.domain.type.Color;
 import org.example.carrier.domain.user.domain.GoogleAccessToken;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.domain.repository.GoogleAccessTokenRepository;
@@ -21,12 +24,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CommandAuthService {
-    private final UserRepository userRepository;
-    private final GoogleOAuthClient googleOAuthClient;
-    private final GoogleInformationClient googleInformationClient;
     private final AuthProperties authProperties;
+    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final GoogleOAuthClient googleOAuthClient;
+    private final CategoryRepository categoryRepository;
+    private final GoogleInformationClient googleInformationClient;
     private final GoogleAccessTokenRepository googleAccessTokenRepository;
+
+    static final String categoryBasicTitle = "나의 일정";
 
     @Transactional
     public TokenResponse signIn(TokenRequest tokenRequest) {
@@ -57,7 +63,7 @@ public class CommandAuthService {
                             String refreshToken
     ) {
         if (user.isEmpty()) {
-            userRepository.save(
+            User newUser = userRepository.save(
                     User.builder()
                             .email(userInfo.email())
                             .nickname(userInfo.name())
@@ -65,6 +71,14 @@ public class CommandAuthService {
                             .googleRefreshToken(refreshToken)
                             .build()
             );
+
+            createCategory(newUser);
         }
+    }
+
+    private void createCategory(User user) {
+        categoryRepository.save(
+                new Category(categoryBasicTitle, Color.BLUE, user)
+        );
     }
 }
