@@ -31,8 +31,9 @@ public class Category extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Category(String name, Color color) {
+    public Category(String name, Color color, User user) {
         this.name = name;
         this.color = color;
+        this.user = user;
     }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.presentation.dto.request.AddCategoryRequest;
 import org.example.carrier.domain.category.service.CommandCategoryService;
+import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,6 @@ public class CommandCategoryController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void createCategory(@Valid @RequestBody AddCategoryRequest request) {
-        commandCategoryService.createCategory(request);
+        commandCategoryService.createCategory(request, UserFacade.getCurrentUser());
     }
 }

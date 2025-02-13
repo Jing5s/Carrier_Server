@@ -6,7 +6,6 @@ import org.example.carrier.domain.calendar.presentation.dto.request.FindCategory
 import org.example.carrier.domain.calendar.presentation.dto.response.ScheduleResponse;
 import org.example.carrier.domain.calendar.service.QueryScheduleService;
 import org.example.carrier.domain.user.facade.UserFacade;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
