@@ -56,4 +56,8 @@ public class Todo extends BaseEntity {
         this.location = location;
         this.user = user;
     }
+
+    public void changeDoneStatus() {
+        isDone = !isDone;
+    }
 }

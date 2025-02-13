@@ -6,6 +6,8 @@ import org.example.carrier.domain.todo.presentation.dto.request.AddTodoRequest;
 import org.example.carrier.domain.todo.service.CommandTodoService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,11 @@ public class CommandTodoController {
     public void createTodo(
             @Valid @RequestBody AddTodoRequest request) {
         commandTodoService.createTodo(request, UserFacade.getCurrentUser());
+    }
+
+    @PatchMapping("/change/{id}")
+    public void changeDoneStatus(
+            @PathVariable Long id) {
+        commandTodoService.changeDoneStatus(id, UserFacade.getCurrentUser());
     }
 }

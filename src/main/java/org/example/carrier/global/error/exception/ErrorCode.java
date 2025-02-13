@@ -13,6 +13,9 @@ public enum ErrorCode {
     // category
     CATEGORY_NOT_FOUND(404, "CATEGORY-404-1", "Category Not Found."),
 
+    // todo
+    TODO_NOT_FOUND(404, "TODO-404-1", "Todo Not Found."),
+
     // jwt
     EXPIRED_JWT_TOKEN(401, "JWT-401-1", "Expired Jwt Token"),
     INVALID_JWT_TOKEN(401, "JWT-401-2", "Invalid Jwt Token"),
