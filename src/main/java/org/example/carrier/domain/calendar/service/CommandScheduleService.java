@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.calendar.domain.repository.ScheduleRepository;
-import org.example.carrier.domain.category.domain.exception.CategoryNotFoundException;
+import org.example.carrier.domain.category.exception.CategoryNotFoundException;
 import org.example.carrier.domain.calendar.presentation.dto.request.AddScheduleRequest;
 import org.example.carrier.domain.user.domain.User;
 import org.springframework.stereotype.Service;
