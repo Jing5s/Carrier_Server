@@ -18,10 +18,10 @@ public record AddScheduleRequest(
         @NotNull(message = "isRepeat이 비어있습니다.")
         Boolean isRepeat,
 
-        @NotEmpty(message = "category이 비어있습니다.")
+        @NotNull(message = "category이 비어있습니다.")
         Long categoryId,
 
-        @NotEmpty(message = "startDate가 비어있습니다.")
+        @NotNull(message = "startDate가 비어있습니다.")
         LocalDateTime startDate,
 
         LocalDateTime endDate,
