@@ -4,11 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.carrier.domain.todo.domain.type.Priority;
+import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.entity.BaseEntity;
 
 import java.time.LocalDate;
@@ -37,4 +41,19 @@ public class Todo extends BaseEntity {
     private String memo;
 
     private String location;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Todo(String title, LocalDate date, Boolean isRepeat,
+                Priority priority, String memo, String location, User user) {
+        this.title = title;
+        this.date = date;
+        this.isRepeat = isRepeat;
+        this.priority = priority;
+        this.memo = memo;
+        this.location = location;
+        this.user = user;
+    }
 }
