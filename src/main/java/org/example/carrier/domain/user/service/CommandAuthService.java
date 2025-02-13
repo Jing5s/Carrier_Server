@@ -2,16 +2,12 @@ package org.example.carrier.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.domain.GoogleAccessToken;
-import org.example.carrier.domain.user.domain.RefreshToken;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.domain.repository.GoogleAccessTokenRepository;
-import org.example.carrier.domain.user.domain.repository.RefreshTokenRepository;
 import org.example.carrier.domain.user.domain.repository.UserRepository;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
-import org.example.carrier.domain.user.presentation.dto.response.AccessTokenResponse;
 import org.example.carrier.domain.user.presentation.dto.response.TokenResponse;
 import org.example.carrier.global.config.properties.AuthProperties;
-import org.example.carrier.global.feign.exception.InvalidAuthTokenException;
 import org.example.carrier.global.feign.google.GoogleInformationClient;
 import org.example.carrier.global.feign.google.GoogleOAuthClient;
 import org.example.carrier.global.feign.google.dto.response.GoogleInformationResponse;
@@ -31,17 +27,6 @@ public class CommandAuthService {
     private final AuthProperties authProperties;
     private final JwtTokenProvider jwtTokenProvider;
     private final GoogleAccessTokenRepository googleAccessTokenRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
-
-    @Transactional(readOnly = true)
-    public AccessTokenResponse reissueToken(String token) {
-        RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(token)
-                .orElseThrow(() -> InvalidAuthTokenException.EXCEPTION);
-
-        return new AccessTokenResponse(
-                jwtTokenProvider.createAccessToken(refreshToken.getEmail())
-        );
-    }
 
     @Transactional
     public TokenResponse signIn(TokenRequest tokenRequest) {
