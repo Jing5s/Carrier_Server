@@ -7,6 +7,7 @@ import org.example.carrier.domain.calendar.presentation.dto.response.ScheduleRes
 import org.example.carrier.domain.calendar.service.QueryScheduleService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/calendar")
+@RequestMapping("/schedule")
 @RestController
 public class QueryScheduleController {
     private final QueryScheduleService queryScheduleService;
 
-    @GetMapping
+    @PostMapping
     public List<ScheduleResponse> listSchedule(@Valid @RequestBody FindCategoryRequest request) {
         return queryScheduleService.getSchedule(request, UserFacade.getCurrentUser());
     }

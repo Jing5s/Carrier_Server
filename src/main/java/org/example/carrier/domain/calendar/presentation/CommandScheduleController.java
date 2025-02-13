@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/calendar")
+@RequestMapping("/schedule")
 @RestController
 public class CommandScheduleController {
     private final CommandScheduleService commandScheduleService;

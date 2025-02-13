@@ -8,7 +8,7 @@ import org.example.carrier.domain.user.domain.User;
 import java.time.LocalDateTime;
 
 public record AddScheduleRequest(
-        @NotEmpty(message = "token이 비어있습니다.")
+        @NotEmpty(message = "title이 비어있습니다.")
         String title,
 
         @NotEmpty(message = "allDay가 비어있습니다.")
