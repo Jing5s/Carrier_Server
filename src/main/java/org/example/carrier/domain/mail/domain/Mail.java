@@ -20,8 +20,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Mail extends BaseEntity {
-    @Column(nullable = false)
-    private String mailId;
+    @Column(name = "gmail_id", nullable = false)
+    private String gmailId;
 
     @Column(nullable = false)
     private String title;
