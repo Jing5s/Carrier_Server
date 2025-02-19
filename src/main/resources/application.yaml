@@ -1,16 +1,18 @@
 spring:
+  config:
+    import: env.yaml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/carrier
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${DB.USERNAME}
+    password: ${DB.PASSWORD}
 
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     generate-ddl: true
     hibernate:
-      ddl-auto: ${DDL_AUTO}
+      ddl-auto: ${DDL.AUTO}
     show-sql: true
     properties:
       hibernate:
@@ -21,18 +23,18 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: ${REDIS_PASSWORD}
+      password: ${REDIS.PASSWORD}
 
 auth:
-  base-url: ${BASE_URL}
-  client-id: ${CLIENT_ID}
-  client-secret: ${CLIENT_SECRET}
-  redirect-url: ${REDIRECT_URL}
-  scopes: ${SCOPES}
+  base-url: ${AUTH.BASE.URL}
+  client-id: ${AUTH.CLIENT.ID}
+  client-secret: ${AUTH.CLIENT.SECRET}
+  redirect-url: ${AUTH.REDIRECT.URL}
+  scopes: ${AUTH.SCOPES}
 
 jwt:
-  access-time: ${JWT_ACCESS_TIME}
-  refresh-time: ${JWT_REFRESH_TIME}
-  prefix: ${JWT_PREFIX}
-  header: ${JWT_HEADER}
-  secret-key: ${JWT_SECRET_KEY}
+  access-time: ${JWT.ACCESS.TIME}
+  refresh-time: ${JWT.REFRESH.TIME}
+  prefix: ${JWT.PREFIX}
+  header: ${JWT.HEADER}
+  secret-key: ${JWT.SECRET.KEY}
