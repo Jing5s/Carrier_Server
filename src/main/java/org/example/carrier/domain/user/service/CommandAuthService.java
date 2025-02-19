@@ -8,12 +8,11 @@ import org.example.carrier.domain.user.domain.GoogleAccessToken;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.domain.repository.GoogleAccessTokenRepository;
 import org.example.carrier.domain.user.domain.repository.UserRepository;
+import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
 import org.example.carrier.domain.user.presentation.dto.response.TokenResponse;
 import org.example.carrier.global.annotation.CustomService;
-import org.example.carrier.global.config.properties.AuthProperties;
 import org.example.carrier.global.feign.google.GoogleInformationClient;
-import org.example.carrier.global.feign.google.GoogleOAuthClient;
 import org.example.carrier.global.feign.google.dto.response.GoogleInformationResponse;
 import org.example.carrier.global.feign.google.dto.response.GoogleRefreshTokenResponse;
 import org.example.carrier.global.security.jwt.JwtTokenProvider;
@@ -23,10 +22,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CustomService
 public class CommandAuthService {
-    private final AuthProperties authProperties;
+    private final GoogleOAuthFacade googleOAuthFacade;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    private final GoogleOAuthClient googleOAuthClient;
     private final CategoryRepository categoryRepository;
     private final GoogleInformationClient googleInformationClient;
     private final GoogleAccessTokenRepository googleAccessTokenRepository;
@@ -34,15 +32,12 @@ public class CommandAuthService {
     static final String categoryBasicTitle = "나의 일정";
 
     public TokenResponse signIn(TokenRequest tokenRequest) {
-        GoogleRefreshTokenResponse googleToken = googleOAuthClient.getRefreshToken(
-                authProperties.getClientId(),
-                authProperties.getClientSecret(),
-                tokenRequest.token(),
-                "authorization_code",
-                authProperties.getRedirectUrl()
-        );
+        GoogleRefreshTokenResponse googleToken
+                = googleOAuthFacade.getGoogleRefreshToken(tokenRequest.token());
 
-        GoogleInformationResponse userInfo = googleInformationClient.getInformation(googleToken.access_token());
+        GoogleInformationResponse userInfo
+                = googleInformationClient.getInformation(googleToken.access_token());
+
         String email = userInfo.email();
         Optional<User> user = userRepository.findByEmail(email);
 

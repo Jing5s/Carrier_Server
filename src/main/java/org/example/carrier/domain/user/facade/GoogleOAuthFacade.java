@@ -9,6 +9,7 @@ import org.example.carrier.domain.user.domain.repository.RefreshTokenRepository;
 import org.example.carrier.domain.user.exception.UserNotFoundException;
 import org.example.carrier.global.config.properties.AuthProperties;
 import org.example.carrier.global.feign.google.GoogleOAuthClient;
+import org.example.carrier.global.feign.google.dto.response.GoogleRefreshTokenResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,6 +20,16 @@ public class GoogleOAuthFacade {
     private final GoogleAccessTokenRepository accessTokenRepository;
     private final GoogleOAuthClient googleOAuthClient;
     private final AuthProperties authProperties;
+
+    public GoogleRefreshTokenResponse getGoogleRefreshToken(String token) {
+        return googleOAuthClient.getRefreshToken(
+                authProperties.getClientId(),
+                authProperties.getClientSecret(),
+                token,
+                "authorization_code",
+                authProperties.getRedirectUrl()
+        );
+    }
 
     public String getGoogleAccessToken(User user) {
         return accessTokenRepository.findById(user.getEmail())
