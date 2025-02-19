@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.category.presentation.dto.request.AddCategoryRequest;
 import org.example.carrier.domain.user.domain.User;
-import org.springframework.stereotype.Service;
+import org.example.carrier.global.annotation.CustomService;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Service
+@CustomService
 public class CommandCategoryService {
     private final CategoryRepository categoryRepository;
 

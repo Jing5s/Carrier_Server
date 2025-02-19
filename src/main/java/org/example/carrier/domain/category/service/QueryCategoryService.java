@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.category.presentation.dto.response.CategoryResponse;
 import org.example.carrier.domain.user.domain.User;
-import org.springframework.stereotype.Service;
+import org.example.carrier.global.annotation.CustomService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@Service
+@CustomService(readOnly = true)
 public class QueryCategoryService {
     private final CategoryRepository categoryRepository;
 

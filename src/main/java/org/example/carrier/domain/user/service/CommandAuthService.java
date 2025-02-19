@@ -10,19 +10,18 @@ import org.example.carrier.domain.user.domain.repository.GoogleAccessTokenReposi
 import org.example.carrier.domain.user.domain.repository.UserRepository;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
 import org.example.carrier.domain.user.presentation.dto.response.TokenResponse;
+import org.example.carrier.global.annotation.CustomService;
 import org.example.carrier.global.config.properties.AuthProperties;
 import org.example.carrier.global.feign.google.GoogleInformationClient;
 import org.example.carrier.global.feign.google.GoogleOAuthClient;
 import org.example.carrier.global.feign.google.dto.response.GoogleInformationResponse;
 import org.example.carrier.global.feign.google.dto.response.GoogleRefreshTokenResponse;
 import org.example.carrier.global.security.jwt.JwtTokenProvider;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Service
+@CustomService
 public class CommandAuthService {
     private final AuthProperties authProperties;
     private final UserRepository userRepository;
@@ -34,7 +33,6 @@ public class CommandAuthService {
 
     static final String categoryBasicTitle = "나의 일정";
 
-    @Transactional
     public TokenResponse signIn(TokenRequest tokenRequest) {
         GoogleRefreshTokenResponse googleToken = googleOAuthClient.getRefreshToken(
                 authProperties.getClientId(),
