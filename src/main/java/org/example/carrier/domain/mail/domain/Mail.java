@@ -28,10 +28,10 @@ public class Mail extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "mail_from", nullable = false)
     private String from;
 
-    @Column(nullable = false)
+    @Column(name = "mail_to", nullable = false)
     private String to;
 
     @Column(nullable = false)
