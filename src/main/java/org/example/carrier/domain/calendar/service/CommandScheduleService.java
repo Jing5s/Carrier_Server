@@ -17,7 +17,7 @@ public class CommandScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     public void createSchedule(@Valid AddScheduleRequest request, User cUser) {
-        Category category = categoryRepository.findById(request.categoryId())
+        Category category = categoryRepository.findByIdAndUser(request.categoryId(), cUser)
                 .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
 
         scheduleRepository.save(request.toCalendar(cUser, category));
