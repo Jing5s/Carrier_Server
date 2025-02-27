@@ -24,7 +24,12 @@ public enum ErrorCode {
     INVALID_AUTH_TOKEN(400, "AUTH-400-1", "Invalid Auth Token"),
 
     // server
-    INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal server error");
+    INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal server error"),
+    NOT_SUPPORTED_METHOD_ERROR(405, "SERVER-405-1", "Method Not Allowed"),
+    VALIDATION_ERROR(400, "SERVER-400-1", "Validation Error"),
+    NOT_SUPPORTED_URI_ERROR(500, "SERVER-500-2", "URI Not Supported"),
+    UNEXPECTED_SERVER_ERROR(500, "SERVER-500-3", "Unexpected Server Error"),
+    ;
 
     private final int status;
     private final String code;

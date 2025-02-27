@@ -49,9 +49,6 @@ public class SecurityConfig {
 
         http.with(new FilterConfig(objectMapper, jwtTokenProvider), FilterConfig::build);
 
-        http.exceptionHandling(handler ->
-            handler.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
-
         return http.build();
     }
 }
