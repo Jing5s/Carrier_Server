@@ -2,8 +2,10 @@ package org.example.carrier.domain.diary.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.diary.domain.Diary;
+import org.example.carrier.domain.diary.domain.repository.CustomDiaryRepository;
 import org.example.carrier.domain.diary.domain.repository.DiaryRepository;
 import org.example.carrier.domain.diary.exception.DiaryNotFoundException;
+import org.example.carrier.domain.diary.presentation.dto.request.GetDiariesRequest;
 import org.example.carrier.domain.diary.presentation.dto.response.DiaryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
@@ -14,6 +16,7 @@ import java.util.List;
 @CustomService(readOnly = true)
 public class QueryDiaryService {
     private final DiaryRepository diaryRepository;
+    private final CustomDiaryRepository customDiaryRepository;
 
     public DiaryResponse getDiary(Long id, User cUser) {
         Diary diary = diaryRepository.findByIdAndUser(id, cUser)
@@ -22,8 +25,11 @@ public class QueryDiaryService {
         return new DiaryResponse(diary);
     }
 
-    public List<DiaryResponse> getDiaries(User cUser) {
-        return diaryRepository.findAllByUser(cUser).stream()
+    public List<DiaryResponse> getDiaries(GetDiariesRequest request, User cUser) {
+        return customDiaryRepository.findAllDiaryByDateAndUser(
+                        request.startDateTime(),
+                        request.endDateTime(),
+                        cUser).stream()
                 .map(DiaryResponse::new)
                 .toList();
     }

@@ -1,10 +1,12 @@
 package org.example.carrier.domain.diary.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.diary.presentation.dto.request.GetDiariesRequest;
 import org.example.carrier.domain.diary.presentation.dto.response.DiaryResponse;
 import org.example.carrier.domain.diary.service.QueryDiaryService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,9 @@ public class QueryDiaryController {
     }
 
     @GetMapping
-    public List<DiaryResponse> getDiaries() {
-        return queryDiaryService.getDiaries(UserFacade.getCurrentUser());
+    public List<DiaryResponse> getDiaries(
+            @ModelAttribute GetDiariesRequest request
+    ) {
+        return queryDiaryService.getDiaries(request, UserFacade.getCurrentUser());
     }
 }
