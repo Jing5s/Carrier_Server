@@ -39,17 +39,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(BindException.class)
-    public ResponseEntity<?> bindExceptionHandling(BindException e) {
-        Map<String, String> errorList = new HashMap<>();
-        for (FieldError error : e.getFieldErrors()) {
-            errorList.put(error.getField(),
-                    error.getDefaultMessage());
-        }
-
-        return new ResponseEntity<>(errorList, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Map<String, String>>> handleBadRequestExceptions(MethodArgumentNotValidException e) {
         Map<String, String> errors = e.getBindingResult().getFieldErrors()
@@ -103,15 +92,6 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleBindException() {
-        val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
-        return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
-        );
-    }
-
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException() {
         val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
@@ -122,7 +102,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException() {
+    public ResponseEntity<ErrorResponse> handleBindException() {
         val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
         return new ResponseEntity<>(
                 response,
