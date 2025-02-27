@@ -8,6 +8,8 @@ import org.example.carrier.domain.diary.presentation.dto.response.DiaryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @CustomService(readOnly = true)
 public class QueryDiaryService {
@@ -18,5 +20,11 @@ public class QueryDiaryService {
                 .orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
 
         return new DiaryResponse(diary);
+    }
+
+    public List<DiaryResponse> getDiaries(User cUser) {
+        return diaryRepository.findAllByUser(cUser).stream()
+                .map(DiaryResponse::new)
+                .toList();
     }
 }
