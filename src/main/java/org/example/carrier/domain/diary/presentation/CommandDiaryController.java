@@ -23,6 +23,7 @@ public class CommandDiaryController {
     private final CommandDiaryService commandDiaryService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Long createDiary(
             @Valid @RequestBody CreateDiaryRequest request
     ) {
