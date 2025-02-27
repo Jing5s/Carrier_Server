@@ -25,4 +25,11 @@ public class CommandDiaryService {
 
         diary.update(request.title(), request.content(), request.emoji());
     }
+
+    public void deleteDiary(Long id, User cUser) {
+        Diary diary = diaryRepository.findByIdAndUser(id, cUser)
+                .orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
+
+        diaryRepository.delete(diary);
+    }
 }

@@ -7,7 +7,9 @@ import org.example.carrier.domain.diary.presentation.dto.request.UpdateDiaryRequ
 import org.example.carrier.domain.diary.service.CommandDiaryService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +35,13 @@ public class CommandDiaryController {
             @Valid @RequestBody UpdateDiaryRequest request
     ) {
         commandDiaryService.updateDiary(request, UserFacade.getCurrentUser());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDiary(
+            @PathVariable Long id
+    ) {
+        commandDiaryService.deleteDiary(id, UserFacade.getCurrentUser());
     }
 }
