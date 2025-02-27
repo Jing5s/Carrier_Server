@@ -50,19 +50,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleHttpMediaTypeNotSupportedException() {
-        val response = new ErrorResponse(ErrorCode.NOT_SUPPORTED_METHOD_ERROR);
+        final ErrorCode errorCode = ErrorCode.NOT_SUPPORTED_METHOD_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoHandlerFoundException() {
-        val response = new ErrorResponse(ErrorCode.NOT_SUPPORTED_URI_ERROR);
+        final ErrorCode errorCode = ErrorCode.NOT_SUPPORTED_URI_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
@@ -71,10 +71,10 @@ public class GlobalExceptionHandler {
             MismatchedInputException.class,
     })
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException() {
-        val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
+        final ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
@@ -85,37 +85,37 @@ public class GlobalExceptionHandler {
             MultipartException.class,
     })
     public ResponseEntity<ErrorResponse> handleUnsatisfiedServletRequestParameterException() {
-        val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
+        final ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException() {
-        val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
+        final ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> handleBindException() {
-        val response = new ErrorResponse(ErrorCode.VALIDATION_ERROR);
+        final ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAnonymousException() {
-        val response = new ErrorResponse(ErrorCode.UNEXPECTED_SERVER_ERROR);
+        final ErrorCode errorCode = ErrorCode.UNEXPECTED_SERVER_ERROR;
         return new ResponseEntity<>(
-                response,
-                HttpStatus.valueOf(response.code())
+                new ErrorResponse(errorCode),
+                HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
