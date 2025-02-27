@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/diaries")
 @RestController
 public class CommandDiaryController {
     private final CommandDiaryService commandDiaryService;
