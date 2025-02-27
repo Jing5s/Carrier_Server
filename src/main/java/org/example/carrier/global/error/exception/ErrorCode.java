@@ -10,6 +10,9 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND(404, "USER-404-1", "User Not Found."),
 
+    // diary
+    DIARY_NOT_FOUND(404, "DIARY-404-1", "Diary Not Found."),
+
     // category
     CATEGORY_NOT_FOUND(404, "CATEGORY-404-1", "Category Not Found."),
 

@@ -36,4 +36,10 @@ public class Diary extends BaseEntity {
         this.emoji = emoji;
         this.user = user;
     }
+
+    public void update(String title, String content, String emoji) {
+        this.title = title;
+        this.content = content;
+        this.emoji = emoji;
+    }
 }
