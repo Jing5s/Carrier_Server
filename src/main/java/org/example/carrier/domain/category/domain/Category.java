@@ -27,6 +27,9 @@ public class Category extends BaseEntity {
     @Column(nullable = false)
     private Color color;
 
+    @Column(nullable = false)
+    private Boolean active = true;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -35,5 +38,9 @@ public class Category extends BaseEntity {
         this.name = name;
         this.color = color;
         this.user = user;
+    }
+
+    public void changeActiveStatus() {
+        active = !active;
     }
 }

@@ -5,7 +5,6 @@ import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.category.presentation.dto.response.CategoryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import java.util.List;
 public class QueryCategoryService {
     private final CategoryRepository categoryRepository;
 
-    @Transactional(readOnly = true)
     public List<CategoryResponse> getCategories(User cuser) {
         return categoryRepository.findAllByUser(cuser).stream()
                 .map(CategoryResponse::new)
