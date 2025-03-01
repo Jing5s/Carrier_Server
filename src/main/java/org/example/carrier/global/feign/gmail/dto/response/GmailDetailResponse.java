@@ -9,6 +9,10 @@ public record GmailDetailResponse(
         String threadId,
         List<String> labelIds,
         String snippet,
-        GmailPayload payload
+        GmailPayload payload,
+        Long historyId
 ) {
+    public Boolean isRead() {
+        return labelIds.contains("UNREAD");
+    }
 }

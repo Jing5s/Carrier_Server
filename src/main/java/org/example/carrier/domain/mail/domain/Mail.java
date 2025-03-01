@@ -22,8 +22,11 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_mail")
 public class Mail extends BaseEntity {
-    @Column(name = "gmail_id", nullable = false)
+    @Column(name = "gmail_id", nullable = false, unique = true)
     private String gmailId;
+
+    @Column(name = "thread_id", nullable = false)
+    private String threadId;
 
     @Column(nullable = false)
     private String title;
@@ -43,6 +46,9 @@ public class Mail extends BaseEntity {
     @Column(name = "is_read", nullable = false)
     private Boolean isRead;
 
+    @Column(name = "history_id", nullable = false)
+    private Long historyId;
+
     @ElementCollection
     @CollectionTable(name = "tbl_mail_labels")
     @Column(nullable = false)
@@ -51,4 +57,22 @@ public class Mail extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Mail(
+            String gmailId, String threadId, String title,
+            String from, String to, String subject,
+            LocalDateTime date, Boolean isRead,
+            Long historyId, List<String> labels, User user) {
+        this.gmailId = gmailId;
+        this.threadId = threadId;
+        this.title = title;
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.date = date;
+        this.isRead = isRead;
+        this.historyId = historyId;
+        this.labels = labels;
+        this.user = user;
+    }
 }

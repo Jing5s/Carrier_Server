@@ -1,7 +1,7 @@
 package org.example.carrier.domain.mail.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.carrier.domain.mail.domain.Mail;
+import lombok.extern.slf4j.Slf4j;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
@@ -13,6 +13,7 @@ import org.example.carrier.global.feign.gmail.dto.response.element.GmailListDeta
 
 @RequiredArgsConstructor
 @CustomService(readOnly = true)
+@Slf4j
 public class QueryMailService {
     private final GmailAPIClient gmailAPIClient;
     private final GoogleOAuthFacade googleOAuthFacade;
@@ -20,16 +21,9 @@ public class QueryMailService {
 
     public GmailListResponse getGmailList(User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
-
-        for (GmailListDetail message : gmailAPIClient.getGmailList(accessToken).messages()) {
-            GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);
-
-//            mailRepository.save(new Mail(
-//                    message.id(),
-//
-//            ))
-        }
-        return null;
+log.info(accessToken);
+        GmailListResponse gmailList = gmailAPIClient.getGmailList(accessToken);
+        return gmailList;
     }
 
     public GmailDetailResponse getGmailDetail(String id, User cUser) {
