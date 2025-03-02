@@ -13,6 +13,6 @@ public record GmailDetailResponse(
         Long historyId
 ) {
     public Boolean isRead() {
-        return labelIds.contains("UNREAD");
+        return !labelIds.contains("UNREAD");
     }
 }

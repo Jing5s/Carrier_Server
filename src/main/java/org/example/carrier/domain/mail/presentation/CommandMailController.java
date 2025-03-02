@@ -33,6 +33,7 @@ public class CommandMailController {
     }
 
     @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateMail() {
         commandMailService.updateMail(UserFacade.getCurrentUser());
     }
