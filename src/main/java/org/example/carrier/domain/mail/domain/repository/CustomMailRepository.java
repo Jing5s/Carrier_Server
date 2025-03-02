@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CustomMailRepository {
     List<Mail> findAllByUserOrderByDate(User user);
+    Long findMaxHistoryId(User user);
 }

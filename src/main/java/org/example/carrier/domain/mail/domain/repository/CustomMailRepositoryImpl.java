@@ -25,4 +25,13 @@ public class CustomMailRepositoryImpl implements CustomMailRepository {
                 .orderBy(mail.date.desc())
                 .fetch();
     }
+
+    @Override
+    public Long findMaxHistoryId(User user) {
+        return queryFactory
+                .select(mail.historyId.max())
+                .from(mail)
+                .where(mail.user.eq(user))
+                .fetchOne();
+    }
 }

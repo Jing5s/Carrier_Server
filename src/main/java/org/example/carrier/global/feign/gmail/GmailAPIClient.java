@@ -1,6 +1,7 @@
 package org.example.carrier.global.feign.gmail;
 
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
+import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,12 @@ public interface GmailAPIClient {
     @GetMapping("/users/me/messages/{id}")
     GmailDetailResponse getGmailDetail(
             @PathVariable String id,
+            @RequestParam String access_token
+    );
+
+    @GetMapping("/users/me/history")
+    GmailHistoryResponse getHistory(
+            @RequestParam Long startHistoryId,
             @RequestParam String access_token
     );
 }
