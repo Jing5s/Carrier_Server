@@ -13,6 +13,9 @@ public enum ErrorCode {
     // diary
     DIARY_NOT_FOUND(404, "DIARY-404-1", "Diary Not Found."),
 
+    // mail
+    MAIL_NOT_FOUND(404, "MAIL-404-1", "Mail Not Found."),
+
     // category
     CATEGORY_NOT_FOUND(404, "CATEGORY-404-1", "Category Not Found."),
 

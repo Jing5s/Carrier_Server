@@ -1,9 +1,12 @@
 package org.example.carrier.domain.mail.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.mail.presentation.dto.response.GetMailResponse;
 import org.example.carrier.domain.mail.service.CommandMailService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,5 +22,12 @@ public class CommandMailController {
     @ResponseStatus(HttpStatus.CREATED)
     public void batchSaveMail() {
         commandMailService.batchSaveMail(UserFacade.getCurrentUser());
+    }
+
+    @GetMapping("/{gmail-id}")
+    public GetMailResponse getGmailDetail(
+            @PathVariable("gmail-id") String gmailId
+    ) {
+        return commandMailService.getGmailDetail(gmailId, UserFacade.getCurrentUser());
     }
 }

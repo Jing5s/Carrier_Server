@@ -64,6 +64,9 @@ dependencies {
     // configuration
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+    // base 64
+    implementation 'commons-codec:commons-codec:1.16.0'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

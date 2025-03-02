@@ -3,6 +3,8 @@ package org.example.carrier.domain.mail.service;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
+import org.example.carrier.domain.mail.exception.MailNotFoundException;
+import org.example.carrier.domain.mail.presentation.dto.response.GetMailResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.global.annotation.CustomService;
@@ -27,6 +29,20 @@ public class CommandMailService {
 
             mailRepository.save(toMail(gmailDetail, cUser));
         });
+    }
+
+    public GetMailResponse getGmailDetail(String gmailId, User cUser) {
+        String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
+
+        Mail mail = mailRepository.findByGmailId(gmailId)
+                .orElseThrow(() -> MailNotFoundException.EXCEPTION);
+        GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(gmailId, accessToken);
+
+        if (!mail.getHistoryId().equals(gmailDetail.historyId())) {
+            mail.update(toMail(gmailDetail, cUser));
+        }
+
+        return GetMailResponse.of(mail, gmailDetail.payload().parts());
     }
 
     private static Mail toMail(GmailDetailResponse gmail, User user) {

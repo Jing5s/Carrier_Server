@@ -75,4 +75,15 @@ public class Mail extends BaseEntity {
         this.labels = labels;
         this.user = user;
     }
+
+    public void update(Mail mail) {
+        this.title = mail.getTitle();
+        this.from = mail.getFrom();
+        this.to = mail.getTo();
+        this.subject = mail.getSubject();
+        this.date = mail.getDate();
+        this.isRead = mail.getIsRead();
+        this.historyId = mail.getHistoryId();
+        this.labels = mail.getLabels();
+    }
 }

@@ -22,9 +22,4 @@ public class QueryMailController {
     public List<GetMailsResponse> getGmailList() {
         return queryMailService.getGmailList(UserFacade.getCurrentUser());
     }
-
-    @GetMapping("/{id}")
-    public GmailDetailResponse getGmailDetail(@PathVariable String id) {
-        return queryMailService.getGmailDetail(id, UserFacade.getCurrentUser());
-    }
 }
