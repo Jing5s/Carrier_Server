@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.carrier.global.entity.BaseEntity;
 
+import java.time.LocalTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
@@ -26,6 +28,9 @@ public class User extends BaseEntity {
     @Column(name = "refresh_token", nullable = false)
     private String googleRefreshToken;
 
+    @Column(name = "notification_time")
+    private LocalTime notificationTime;
+
     @Builder
     public User(String email, String nickname, String picture, String googleRefreshToken) {
         this.email = email;
@@ -36,6 +41,11 @@ public class User extends BaseEntity {
 
     public User update(String nickname) {
         this.nickname = nickname;
+        return this;
+    }
+
+    public User updateNotificationTime(LocalTime notificationTime) {
+        this.notificationTime = notificationTime;
         return this;
     }
 }

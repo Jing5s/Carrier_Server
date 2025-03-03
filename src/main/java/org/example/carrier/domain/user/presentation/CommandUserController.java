@@ -3,6 +3,7 @@ package org.example.carrier.domain.user.presentation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.facade.UserFacade;
+import org.example.carrier.domain.user.presentation.dto.request.UpdateNotificationRequest;
 import org.example.carrier.domain.user.presentation.dto.request.UpdateProfileRequest;
 import org.example.carrier.domain.user.service.CommandUserService;
 import org.springframework.http.HttpStatus;
@@ -24,5 +25,13 @@ public class CommandUserController {
             @Valid @RequestBody UpdateProfileRequest request
     ) {
         commandUserService.updateProfile(request, UserFacade.getCurrentUser());
+    }
+
+    @PatchMapping("/notification")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateNotification(
+            @Valid @RequestBody UpdateNotificationRequest request
+    ) {
+        commandUserService.updateNotification(request, UserFacade.getCurrentUser());
     }
 }
