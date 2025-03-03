@@ -5,8 +5,10 @@ import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.category.domain.type.Color;
 import org.example.carrier.domain.user.domain.GoogleAccessToken;
+import org.example.carrier.domain.user.domain.RefreshToken;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.domain.repository.GoogleAccessTokenRepository;
+import org.example.carrier.domain.user.domain.repository.RefreshTokenRepository;
 import org.example.carrier.domain.user.domain.repository.UserRepository;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
@@ -28,6 +30,7 @@ public class CommandAuthService {
     private final CategoryRepository categoryRepository;
     private final GoogleInformationClient googleInformationClient;
     private final GoogleAccessTokenRepository googleAccessTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     static final String categoryBasicTitle = "나의 일정";
 
@@ -67,6 +70,12 @@ public class CommandAuthService {
 
             createCategory(newUser);
         }
+    }
+
+    public void logout(User cUser) {
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findById(cUser.getEmail());
+
+        refreshToken.ifPresent(refreshTokenRepository::delete);
     }
 
     private void createCategory(User user) {
