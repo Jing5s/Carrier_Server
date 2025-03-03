@@ -8,7 +8,8 @@ import java.util.List;
 public record GmailPayload(
         String mimeType,
         List<GmailHeaders> headers,
-        List<GmailParts> parts
+        List<GmailParts> parts,
+        GmailPartsBody body
 ) {
     public String getFrom() {
         return getHeaderValue(headers, "From");

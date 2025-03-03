@@ -2,6 +2,7 @@ package org.example.carrier.domain.mail.presentation.dto.response;
 
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailParts;
+import org.example.carrier.global.feign.gmail.dto.response.element.GmailPartsBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,9 +16,10 @@ public record GetMailResponse(
         LocalDateTime date,
         Boolean isRead,
         List<String> labels,
+        GmailPartsBody body,
         List<GmailParts> parts
 ) {
-    public static GetMailResponse of(Mail mail, List<GmailParts> parts) {
+    public static GetMailResponse of(Mail mail, GmailPartsBody body, List<GmailParts> parts) {
         return new GetMailResponse(
                 mail.getGmailId(),
                 mail.getTitle(),
@@ -27,6 +29,7 @@ public record GetMailResponse(
                 mail.getDate(),
                 mail.getIsRead(),
                 List.copyOf(mail.getLabels()),
+                body,
                 parts
         );
     }

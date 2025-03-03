@@ -37,7 +37,7 @@ public class CommandMailService {
             mail.update(toMail(gmailDetail, cUser));
         }
 
-        return GetMailResponse.of(mail, gmailDetail.payload().parts());
+        return GetMailResponse.of(mail, gmailDetail.payload().body(), gmailDetail.payload().parts());
     }
 
     public void batchSaveMail(User cUser) {
