@@ -1,5 +1,6 @@
 package org.example.carrier.domain.diary.presentation;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.diary.presentation.dto.request.GetDiariesRequest;
 import org.example.carrier.domain.diary.presentation.dto.response.DiaryResponse;
@@ -28,7 +29,7 @@ public class QueryDiaryController {
 
     @GetMapping
     public List<DiaryResponse> getDiaries(
-            @ModelAttribute GetDiariesRequest request
+            @Valid @ModelAttribute GetDiariesRequest request
     ) {
         return queryDiaryService.getDiaries(request, UserFacade.getCurrentUser());
     }

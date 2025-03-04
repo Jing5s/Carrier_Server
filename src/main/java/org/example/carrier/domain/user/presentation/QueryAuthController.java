@@ -26,7 +26,9 @@ public class QueryAuthController {
 
     @PostMapping("/reissue")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccessTokenResponse reissueToken(@Valid @RequestBody TokenRequest tokenRequest) {
+    public AccessTokenResponse reissueToken(
+            @Valid @RequestBody TokenRequest tokenRequest
+    ) {
         return queryAuthService.reissueToken(tokenRequest.token());
     }
 }

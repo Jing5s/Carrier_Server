@@ -21,7 +21,9 @@ public class CommandAuthController {
     private final CommandAuthService commandAuthService;
 
     @PostMapping
-    public TokenResponse authSignIn(@Valid @RequestBody TokenRequest tokenRequest) {
+    public TokenResponse authSignIn(
+            @Valid @RequestBody TokenRequest tokenRequest
+    ) {
         return commandAuthService.signIn(tokenRequest);
     }
 

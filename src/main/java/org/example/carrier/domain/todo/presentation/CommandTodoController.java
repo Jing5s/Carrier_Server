@@ -23,14 +23,16 @@ public class CommandTodoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTodo(
-            @Valid @RequestBody AddTodoRequest request) {
+            @Valid @RequestBody AddTodoRequest request
+    ) {
         commandTodoService.createTodo(request, UserFacade.getCurrentUser());
     }
 
     @PatchMapping("/change/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changeDoneStatus(
-            @PathVariable Long id) {
+            @PathVariable Long id
+    ) {
         commandTodoService.changeDoneStatus(id, UserFacade.getCurrentUser());
     }
 }

@@ -20,7 +20,9 @@ public class CommandScheduleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSchedule(@Valid @RequestBody AddScheduleRequest request) {
+    public void createSchedule(
+            @Valid @RequestBody AddScheduleRequest request
+    ) {
         commandScheduleService.createSchedule(request, UserFacade.getCurrentUser());
     }
 }

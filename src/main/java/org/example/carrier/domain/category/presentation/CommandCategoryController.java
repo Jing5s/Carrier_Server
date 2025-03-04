@@ -22,13 +22,17 @@ public class CommandCategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCategory(@Valid @RequestBody AddCategoryRequest request) {
+    public void createCategory(
+            @Valid @RequestBody AddCategoryRequest request
+    ) {
         commandCategoryService.createCategory(request, UserFacade.getCurrentUser());
     }
 
     @PatchMapping("/change/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void changeActiveStatus(@PathVariable Long id) {
+    public void changeActiveStatus(
+            @PathVariable Long id
+    ) {
         commandCategoryService.changeActiveStatus(id, UserFacade.getCurrentUser());
     }
 }

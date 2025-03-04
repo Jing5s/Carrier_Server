@@ -1,5 +1,6 @@
 package org.example.carrier.domain.diary.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.diary.domain.Diary;
 import org.example.carrier.domain.diary.domain.repository.CustomDiaryRepository;
@@ -25,7 +26,7 @@ public class QueryDiaryService {
         return new DiaryResponse(diary);
     }
 
-    public List<DiaryResponse> getDiaries(GetDiariesRequest request, User cUser) {
+    public List<DiaryResponse> getDiaries(@Valid GetDiariesRequest request, User cUser) {
         return customDiaryRepository.findAllDiaryByDateAndUser(
                         request.startDateTime(),
                         request.endDateTime(),

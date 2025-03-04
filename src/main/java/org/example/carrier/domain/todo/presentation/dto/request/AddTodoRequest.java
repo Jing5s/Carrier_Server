@@ -21,8 +21,10 @@ public record AddTodoRequest(
         @NotNull(message = "priority가 비어있습니다.")
         Priority priority,
 
+        @NotEmpty(message = "memo가 비어있습니다.")
         String memo,
 
+        @NotEmpty(message = "location이 비어있습니다.")
         String location
 ) {
     public Todo toTodo(User user) {

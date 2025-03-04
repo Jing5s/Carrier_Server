@@ -1,5 +1,6 @@
 package org.example.carrier.domain.user.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
@@ -34,7 +35,7 @@ public class CommandAuthService {
 
     static final String categoryBasicTitle = "나의 일정";
 
-    public TokenResponse signIn(TokenRequest tokenRequest) {
+    public TokenResponse signIn(@Valid TokenRequest tokenRequest) {
         GoogleRefreshTokenResponse googleToken
                 = googleOAuthFacade.getGoogleRefreshToken(tokenRequest.token());
 

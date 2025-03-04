@@ -1,5 +1,6 @@
 package org.example.carrier.domain.todo.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.todo.domain.Todo;
 import org.example.carrier.domain.todo.domain.repository.TodoRepository;
@@ -13,7 +14,7 @@ import org.example.carrier.global.annotation.CustomService;
 public class CommandTodoService {
     private final TodoRepository todoRepository;
 
-    public void createTodo(AddTodoRequest request, User cUser) {
+    public void createTodo(@Valid AddTodoRequest request, User cUser) {
         todoRepository.save(request.toTodo(cUser));
     }
 
