@@ -1,23 +1,23 @@
 package org.example.carrier.domain.calendar.presentation.dto.response;
 
 import org.example.carrier.domain.calendar.domain.Schedule;
-import org.example.carrier.domain.category.presentation.dto.response.CategoryResponse;
+import org.example.carrier.domain.category.presentation.dto.response.GetCategoriesResponse;
 
 import java.time.LocalDateTime;
 
-public record ScheduleResponse(
+public record GetSchedulesResponse(
         String title,
         Boolean allDay,
         Boolean isRepeat,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        CategoryResponse category
+        GetCategoriesResponse category
 ) {
-    public ScheduleResponse(Schedule schedule) {
+    public GetSchedulesResponse(Schedule schedule) {
         this(
                 schedule.getTitle(), schedule.getAllDay(),
                 schedule.getIsRepeat(), schedule.getStartDate(),
-                schedule.getEndDate(), new CategoryResponse(schedule.getCategory())
+                schedule.getEndDate(), new GetCategoriesResponse(schedule.getCategory())
         );
     }
 }

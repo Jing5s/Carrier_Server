@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/mail")
+@RequestMapping("/mails")
 @RestController
 public class CommandMailController {
     private final CommandMailService commandMailService;

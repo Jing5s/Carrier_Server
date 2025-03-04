@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommandAuthController {
     private final CommandAuthService commandAuthService;
 
-    @PostMapping("/signIn")
+    @PostMapping
     public TokenResponse authSignIn(@Valid @RequestBody TokenRequest tokenRequest) {
         return commandAuthService.signIn(tokenRequest);
     }

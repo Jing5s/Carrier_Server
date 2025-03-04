@@ -13,7 +13,7 @@ import java.util.List;
 public class QueryMailService {
     private final CustomMailRepository mailRepository;
 
-    public List<GetMailsResponse> getGmailList(User cUser) {
+    public List<GetMailsResponse> getMails(User cUser) {
         return mailRepository.findAllByUserOrderByDate(cUser).stream()
                 .map(GetMailsResponse::of)
                 .toList();

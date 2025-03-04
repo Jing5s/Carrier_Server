@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/mail")
+@RequestMapping("/mails")
 @RestController
 public class QueryMailController {
     private final QueryMailService queryMailService;
 
     @GetMapping
-    public List<GetMailsResponse> getGmailList() {
-        return queryMailService.getGmailList(UserFacade.getCurrentUser());
+    public List<GetMailsResponse> getMails() {
+        return queryMailService.getMails(UserFacade.getCurrentUser());
     }
 }

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/todo")
+@RequestMapping("/todos")
 @RestController
 public class CommandTodoController {
     private final CommandTodoService commandTodoService;
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTodo(
             @Valid @RequestBody AddTodoRequest request) {
@@ -28,6 +28,7 @@ public class CommandTodoController {
     }
 
     @PatchMapping("/change/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changeDoneStatus(
             @PathVariable Long id) {
         commandTodoService.changeDoneStatus(id, UserFacade.getCurrentUser());

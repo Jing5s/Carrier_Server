@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 @RestController
 public class CommandScheduleController {
     private final CommandScheduleService commandScheduleService;
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createSchedule(@Valid @RequestBody AddScheduleRequest request) {
         commandScheduleService.createSchedule(request, UserFacade.getCurrentUser());

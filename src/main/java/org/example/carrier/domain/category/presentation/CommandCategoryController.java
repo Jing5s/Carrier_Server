@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/category")
+@RequestMapping("/categories")
 @RestController
 public class CommandCategoryController {
     private final CommandCategoryService commandCategoryService;
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createCategory(@Valid @RequestBody AddCategoryRequest request) {
         commandCategoryService.createCategory(request, UserFacade.getCurrentUser());

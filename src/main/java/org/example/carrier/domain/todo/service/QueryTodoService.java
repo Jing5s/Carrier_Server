@@ -13,7 +13,7 @@ import java.util.List;
 public class QueryTodoService {
     private final TodoRepository todoRepository;
 
-    public List<TodoResponse> getTodoList(LocalDate date) {
+    public List<TodoResponse> getTodos(LocalDate date) {
         return todoRepository.findAllByDate(date).stream()
                 .map(TodoResponse::new)
                 .toList();
