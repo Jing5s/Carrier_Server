@@ -37,4 +37,12 @@ public class CommandMailController {
     public void updateMail() {
         commandMailService.updateMail(UserFacade.getCurrentUser());
     }
+
+    @PatchMapping("/read/{gmail-id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void readMail(
+            @PathVariable("gmail-id") String gmailId
+    ) {
+        commandMailService.readMail(gmailId, UserFacade.getCurrentUser());
+    }
 }

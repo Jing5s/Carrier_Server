@@ -10,6 +10,7 @@ import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.global.annotation.CustomService;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
+import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
@@ -71,6 +72,12 @@ public class CommandMailService {
                 mailRepository.save(newGmail);
             }
         });
+    }
+
+    public void readMail(String gmailId, User cUser) {
+        String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
+
+        gmailAPIClient.modifyLabels(gmailId, new ModifyLabelRequest(), "Bearer " + accessToken);
     }
 
     private static Mail toMail(GmailDetailResponse gmail, User user) {
