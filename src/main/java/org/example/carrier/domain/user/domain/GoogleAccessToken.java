@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RedisHash(value = "accessToken", timeToLive = 3500L)
+@RedisHash(value = "accessToken", timeToLive = 3599000L)
 public class GoogleAccessToken {
     @Id
     private String email;

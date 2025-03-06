@@ -44,6 +44,10 @@ public class User extends BaseEntity {
         return this;
     }
 
+    public void updateGoogleRefreshToken(String googleRefreshToken) {
+        this.googleRefreshToken = googleRefreshToken;
+    }
+
     public User updateNotificationTime(LocalTime notificationTime) {
         this.notificationTime = notificationTime;
         return this;

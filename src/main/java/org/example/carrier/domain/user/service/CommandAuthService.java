@@ -70,6 +70,8 @@ public class CommandAuthService {
             );
 
             createCategory(newUser);
+        } else {
+            user.get().updateGoogleRefreshToken(refreshToken);
         }
     }
 
