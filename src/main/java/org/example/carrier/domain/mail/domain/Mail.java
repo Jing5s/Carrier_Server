@@ -41,6 +41,9 @@ public class Mail extends BaseEntity {
     private String subject;
 
     @Column(nullable = false)
+    private String preview;
+
+    @Column(nullable = false)
     private LocalDateTime date;
 
     @Column(name = "is_read", nullable = false)
@@ -60,7 +63,7 @@ public class Mail extends BaseEntity {
 
     public Mail(
             String gmailId, String threadId, String title,
-            String from, String to, String subject,
+            String from, String to, String subject, String preview,
             LocalDateTime date, Boolean isRead,
             Long historyId, List<String> labels, User user) {
         this.gmailId = gmailId;
@@ -69,6 +72,7 @@ public class Mail extends BaseEntity {
         this.from = from;
         this.to = to;
         this.subject = subject;
+        this.preview = preview;
         this.date = date;
         this.isRead = isRead;
         this.historyId = historyId;

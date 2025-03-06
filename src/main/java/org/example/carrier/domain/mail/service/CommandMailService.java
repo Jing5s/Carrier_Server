@@ -86,6 +86,7 @@ public class CommandMailService {
                 gmail.payload().getFrom(),
                 gmail.payload().getTo(),
                 gmail.payload().getSubject(),
+                gmail.payload().getBody(),
                 gmail.payload().getDate(),
                 gmail.isRead(),
                 gmail.historyId(),

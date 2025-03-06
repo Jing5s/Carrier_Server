@@ -1,6 +1,7 @@
 package org.example.carrier.domain.mail.presentation.dto.response;
 
 import org.example.carrier.domain.mail.domain.Mail;
+import org.example.carrier.global.feign.gmail.dto.response.element.GmailPayload;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +12,7 @@ public record GetMailsResponse(
         String from,
         String to,
         String subject,
+        String preview,
         LocalDateTime date,
         Boolean isRead,
         List<String> labels
@@ -22,6 +24,7 @@ public record GetMailsResponse(
                 mail.getFrom(),
                 mail.getTo(),
                 mail.getSubject(),
+                mail.getPreview(),
                 mail.getDate(),
                 mail.getIsRead(),
                 mail.getLabels()

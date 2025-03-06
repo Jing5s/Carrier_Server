@@ -34,7 +34,6 @@ public class QueryScheduleController {
     @GetMapping("/test")
     public GptBasicRequest getGptBasic() throws JsonProcessingException {
         GptMailSummaryRequest request = new GptMailSummaryRequest("sdfsdf", "sdfsdf", "sdfsdfsdf");
-        String string = objectMapper.writeValueAsString(request);
-        return new GptBasicRequest(string);
+        return new GptBasicRequest(objectMapper, request);
     }
 }
