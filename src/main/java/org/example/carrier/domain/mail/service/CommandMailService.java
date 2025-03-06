@@ -12,10 +12,12 @@ import org.example.carrier.global.annotation.CustomService;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
 import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
+import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
 import org.jsoup.Jsoup;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,7 +60,10 @@ public class CommandMailService {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
-        Set<String> updateMailId = gmailAPIClient.getHistory(maxHistoryId, accessToken).history().stream()
+        Set<String> updateMailId = Optional.ofNullable(gmailAPIClient.getHistory(maxHistoryId, accessToken))
+                .map(GmailHistoryResponse::history)
+                .orElse(Collections.emptyList())
+                .stream()
                 .collect(Collectors.groupingBy(GmailHistory::getMailId))
                 .keySet();
 
