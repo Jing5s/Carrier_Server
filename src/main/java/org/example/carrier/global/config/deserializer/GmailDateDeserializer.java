@@ -11,7 +11,7 @@ public class GmailDateDeserializer {
 
     private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
             .parseCaseInsensitive()
-            .appendPattern("EEE, dd MMM yyyy HH:mm:ss ")
+            .appendPattern("EEE, d MMM yyyy HH:mm:ss ")
             .optionalStart()
             .appendPattern("z")
             .optionalEnd()
