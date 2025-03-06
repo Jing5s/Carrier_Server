@@ -28,11 +28,51 @@ public record GmailPayload(
         return GmailDateDeserializer.parse(dateStr);
     }
 
+    public String getBody() {
+        if (body != null && body.data() != null && !body.data().isBlank()) {
+            return body.data();
+        }
+
+        return findBody(parts);
+    }
+
     private static String getHeaderValue(List<GmailHeaders> headers, String headerName) {
         return headers.stream()
                 .filter(header -> header.name().equalsIgnoreCase(headerName))
                 .map(GmailHeaders::value)
                 .findFirst()
                 .orElse(null);
+    }
+
+    private String findBody(List<GmailParts> parts) {
+        if (parts == null || parts.isEmpty()) {
+            return null;
+        }
+
+        String textPlain = null;
+        String textHtml = null;
+
+        for (GmailParts part : parts) {
+            if (part.body() != null && part.body().data() != null && !part.body().data().isBlank()) {
+                if ("text/plain".equalsIgnoreCase(part.mimeType())) {
+                    textPlain = part.body().data();
+                } else if ("text/html".equalsIgnoreCase(part.mimeType())) {
+                    textHtml = part.body().data();
+                }
+            }
+
+            if (part.parts() != null) {
+                String nestedBody = findBody(part.parts());
+                if (nestedBody != null) {
+                    if (part.mimeType().equalsIgnoreCase("text/plain")) {
+                        textPlain = nestedBody;
+                    } else if (part.mimeType().equalsIgnoreCase("text/html")) {
+                        textHtml = nestedBody;
+                    }
+                }
+            }
+        }
+
+        return textHtml != null ? textHtml : textPlain;
     }
 }
