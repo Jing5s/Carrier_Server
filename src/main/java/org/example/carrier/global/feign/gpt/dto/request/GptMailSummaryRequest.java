@@ -4,5 +4,5 @@ public record GptMailSummaryRequest(
         String gmailId,
         String title,
         String data
-) {
+) implements GptBasicMessageRequest {
 }

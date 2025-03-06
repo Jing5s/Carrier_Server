@@ -10,5 +10,5 @@ public record GptTodayTipsRequest(
         List<ScheduleElement> schedule,
         List<TodoElement> todo,
         List<MailElement> mail
-) {
+) implements GptBasicMessageRequest {
 }

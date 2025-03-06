@@ -4,5 +4,5 @@ public record GptMailScheduleRequest(
         String gmailId,
         String title,
         String data
-) {
+) implements GptBasicMessageRequest {
 }
