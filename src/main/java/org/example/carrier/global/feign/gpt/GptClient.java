@@ -22,19 +22,19 @@ public interface GptClient {
     );
 
     @PostMapping
-    GptMailScheduleResponse getImportantMail(
+    GptMailScheduleResponse getMailSchedule(
             @RequestHeader("Authorization") String access_token,
             @RequestBody GptMailScheduleRequest gptMailScheduleRequest
     );
 
     @PostMapping
-    GptMailSummaryResponse getImportantMail(
+    GptMailSummaryResponse getMailSummary(
             @RequestHeader("Authorization") String access_token,
             @RequestBody GptMailSummaryRequest gptMailSummaryRequest
     );
 
     @PostMapping
-    GptTodayTipsResponse getImportantMail(
+    GptTodayTipsResponse getTodayTips(
             @RequestHeader("Authorization") String access_token,
             @RequestBody GptTodayTipsRequest gptTodayTipsRequest
     );
