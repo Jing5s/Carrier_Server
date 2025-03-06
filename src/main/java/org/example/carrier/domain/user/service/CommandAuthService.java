@@ -45,17 +45,18 @@ public class CommandAuthService {
         String email = userInfo.email();
         Optional<User> user = userRepository.findByEmail(email);
 
-        createUser(user, userInfo, googleToken.refresh_token());
+        Boolean isSignIn = createUser(user, userInfo, googleToken.refresh_token());
 
         googleAccessTokenRepository.save(new GoogleAccessToken(email, googleToken.access_token()));
 
         return new TokenResponse(
                 jwtTokenProvider.createAccessToken(email),
-                jwtTokenProvider.createRefreshToken(email)
+                jwtTokenProvider.createRefreshToken(email),
+                isSignIn
         );
     }
 
-    private void createUser(Optional<User> user,
+    private Boolean createUser(Optional<User> user,
                             GoogleInformationResponse userInfo,
                             String refreshToken
     ) {
@@ -70,8 +71,10 @@ public class CommandAuthService {
             );
 
             createCategory(newUser);
+            return true;
         } else {
             user.get().updateGoogleRefreshToken(refreshToken);
+            return false;
         }
     }
 
