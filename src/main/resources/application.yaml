@@ -38,3 +38,6 @@ jwt:
   prefix: ${JWT.PREFIX}
   header: ${JWT.HEADER}
   secret-key: ${JWT.SECRET.KEY}
+
+gpt:
+  token: ${GPT.TOKEN}
