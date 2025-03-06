@@ -7,5 +7,5 @@ public record GptMailScheduleResponse(
         Boolean allDay,
         LocalDateTime startDate,
         LocalDateTime endDate
-) {
+) implements GptMessageResponse {
 }
