@@ -52,6 +52,8 @@ public class Mail extends BaseEntity {
     @Column(name = "history_id", nullable = false)
     private Long historyId;
 
+    private String summary;
+
     @ElementCollection
     @CollectionTable(name = "tbl_mail_labels")
     @Column(nullable = false)
@@ -89,5 +91,9 @@ public class Mail extends BaseEntity {
         this.isRead = mail.getIsRead();
         this.historyId = mail.getHistoryId();
         this.labels = mail.getLabels();
+    }
+
+    public void updateSummary(String summary) {
+        this.summary = summary;
     }
 }

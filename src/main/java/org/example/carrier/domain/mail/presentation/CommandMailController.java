@@ -1,7 +1,9 @@
 package org.example.carrier.domain.mail.presentation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.mail.presentation.dto.response.GetMailResponse;
+import org.example.carrier.domain.mail.presentation.dto.response.GetMailSummaryResponse;
 import org.example.carrier.domain.mail.service.CommandMailService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,12 @@ public class CommandMailController {
             @PathVariable("gmail-id") String gmailId
     ) {
         commandMailService.readMail(gmailId, UserFacade.getCurrentUser());
+    }
+
+    @PatchMapping("/summary/{gmail-id}")
+    public GetMailSummaryResponse getGmailSummary(
+            @PathVariable("gmail-id") String gmailId
+    ) throws JsonProcessingException {
+        return commandMailService.getMailSummary(gmailId, UserFacade.getCurrentUser());
     }
 }

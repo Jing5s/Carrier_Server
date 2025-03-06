@@ -1,20 +1,29 @@
 package org.example.carrier.domain.mail.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.mail.exception.MailNotFoundException;
 import org.example.carrier.domain.mail.presentation.dto.response.GetMailResponse;
+import org.example.carrier.domain.mail.presentation.dto.response.GetMailSummaryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.global.annotation.CustomService;
+import org.example.carrier.global.config.properties.GptProperties;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
 import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
+import org.example.carrier.global.feign.gpt.GptClient;
+import org.example.carrier.global.feign.gpt.dto.request.GptBasicRequest;
+import org.example.carrier.global.feign.gpt.dto.request.GptMailSummaryRequest;
+import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
+import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
 import org.jsoup.Jsoup;
 
 import java.util.Collections;
@@ -29,6 +38,9 @@ public class CommandMailService {
     private final CustomMailRepository customMailRepository;
     private final GmailAPIClient gmailAPIClient;
     private final GoogleOAuthFacade googleOAuthFacade;
+    private final ObjectMapper objectMapper;
+    private final GptClient gptClient;
+    private final GptProperties gptProperties;
 
     public GetMailResponse getGmailDetail(String gmailId, User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
@@ -42,6 +54,27 @@ public class CommandMailService {
         }
 
         return GetMailResponse.of(mail, gmailDetail.payload());
+    }
+
+    public GetMailSummaryResponse getMailSummary(String gmailId, User cUser) throws JsonProcessingException {
+        String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
+        Mail mail = mailRepository.findByGmailId(gmailId)
+                .orElseThrow(() -> MailNotFoundException.EXCEPTION);
+
+        if (mail.getSummary() != null)
+            return new GetMailSummaryResponse(mail.getSummary());
+
+        GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(gmailId, accessToken);
+
+        GptBasicRequest request = GptMailSummaryRequest.of(
+                objectMapper, mail.getGmailId(), mail.getTitle(), gmailDetail.payload().getBody());
+
+        GptBasicResponse gptResponse = gptClient.getGptResponse("Bearer " + gptProperties.getToken(), request);
+        GptMailSummaryResponse response = (GptMailSummaryResponse) gptResponse.getResponse(objectMapper, GptMailSummaryResponse.class);
+
+        mail.updateSummary(response.summary());
+
+        return new GetMailSummaryResponse(response.summary());
     }
 
     public void batchSaveMail(User cUser) {
