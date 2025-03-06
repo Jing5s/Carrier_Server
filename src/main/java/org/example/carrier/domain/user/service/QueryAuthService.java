@@ -16,15 +16,17 @@ public class QueryAuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String getOAuthLink() {
+    public String getOAuthLink(Boolean redirectUrlBoolean) {
         String scopeParam = String.join(" ", properties.getScopes());
+        String redirectUrl = "";
+        if (redirectUrlBoolean) { redirectUrl = properties.getRedirectUrl(); }
 
         return String.format(
-                "%s?client_id=%s&access_type=offline&prompt=consent&redirect_uri=%s&response_type=code&scope=%s",
+                "%s?client_id=%s&access_type=offline&prompt=consent&response_type=code&scope=%s&redirect_uri=%s",
                 properties.getBaseUrl(),
                 properties.getClientId(),
-                properties.getRedirectUrl(),
-                scopeParam
+                scopeParam,
+                redirectUrl
         );
     }
 

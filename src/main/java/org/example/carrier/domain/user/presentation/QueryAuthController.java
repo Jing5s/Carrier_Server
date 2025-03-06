@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,10 @@ public class QueryAuthController {
     private final QueryAuthService queryAuthService;
 
     @GetMapping
-    public String getAuthLink() {
-        return queryAuthService.getOAuthLink();
+    public String getAuthLink(
+            @RequestParam(required = false, defaultValue = "false") Boolean redirectUrl
+    ) {
+        return queryAuthService.getOAuthLink(redirectUrl);
     }
 
     @PostMapping("/reissue")
