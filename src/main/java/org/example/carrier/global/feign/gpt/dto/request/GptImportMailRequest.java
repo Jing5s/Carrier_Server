@@ -12,5 +12,5 @@ public record GptImportMailRequest(
         LocalDateTime date,
         Boolean isRead,
         List<String> labels
-) implements GptBasicMessageRequest {
+) {
 }
