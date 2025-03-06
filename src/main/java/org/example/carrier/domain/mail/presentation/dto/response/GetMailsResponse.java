@@ -1,7 +1,6 @@
 package org.example.carrier.domain.mail.presentation.dto.response;
 
 import org.example.carrier.domain.mail.domain.Mail;
-import org.example.carrier.global.feign.gmail.dto.response.element.GmailPayload;
 
 import java.time.LocalDateTime;
 import java.util.List;

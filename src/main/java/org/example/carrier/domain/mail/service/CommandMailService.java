@@ -14,6 +14,7 @@ import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
+import org.jsoup.Jsoup;
 
 import java.util.Optional;
 import java.util.Set;
@@ -81,12 +82,17 @@ public class CommandMailService {
     }
 
     private static Mail toMail(GmailDetailResponse gmail, User user) {
+        String body = gmail.payload().getBody();
+        body = Jsoup.parse(body).text();
+        body = body.substring(0, Math.min(body.length(), 500));
+        body = body.replaceAll("\\s{2,}", " ");
+
         return new Mail(
                 gmail.id(), gmail.threadId(), gmail.snippet(),
                 gmail.payload().getFrom(),
                 gmail.payload().getTo(),
                 gmail.payload().getSubject(),
-                gmail.payload().getBody(),
+                body,
                 gmail.payload().getDate(),
                 gmail.isRead(),
                 gmail.historyId(),

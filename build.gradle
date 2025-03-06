@@ -67,6 +67,9 @@ dependencies {
     // base 64
     implementation 'commons-codec:commons-codec:1.16.0'
 
+    // jsoup
+    implementation 'org.jsoup:jsoup:1.19.1'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

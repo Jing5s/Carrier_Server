@@ -40,7 +40,7 @@ public class Mail extends BaseEntity {
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String preview;
 
     @Column(nullable = false)
