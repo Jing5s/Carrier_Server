@@ -22,8 +22,10 @@ import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
 import org.example.carrier.global.feign.gpt.GptClient;
 import org.example.carrier.global.feign.gpt.dto.request.GptBasicRequest;
+import org.example.carrier.global.feign.gpt.dto.request.GptImportMailRequest;
 import org.example.carrier.global.feign.gpt.dto.request.GptMailSummaryRequest;
 import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
+import org.example.carrier.global.feign.gpt.dto.response.GptImportMailResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
 
 import java.util.Collections;
@@ -42,6 +44,7 @@ public class CommandMailService {
     private final ObjectMapper objectMapper;
     private final GptClient gptClient;
     private final GptProperties gptProperties;
+    private final QueryMailService queryMailService;
 
     public GetMailResponse getGmailDetail(String gmailId, User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
@@ -106,10 +109,23 @@ public class CommandMailService {
             Mail newGmail = toMail(gmailDetail, cUser);
 
             Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
-            if (gmail.isPresent()) {
-                gmail.get().update(newGmail);
-            } else {
-                mailRepository.save(newGmail);
+            try {
+                if (gmail.isPresent()) {
+                    gmail.get().update(newGmail);
+                } else {
+                    Mail mail = mailRepository.save(newGmail);
+
+                    GptBasicRequest request = GptImportMailRequest.of(
+                            objectMapper, mail.getGmailId(), mail.getSubject(), mail.getFrom(), mail.getTo(),
+                            mail.getPreview(), mail.getDate(), mail.getIsRead(), mail.getLabels());
+
+                    GptBasicResponse gptResponse = gptClient.getGptResponse("Bearer " + gptProperties.getToken(), request);
+                    GptImportMailResponse response = (GptImportMailResponse) gptResponse.getResponse(objectMapper, GptMailSummaryResponse.class);
+
+                    mail.updateIsImportant(response.important());
+                }
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
         });
     }

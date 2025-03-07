@@ -54,6 +54,9 @@ public class Mail extends BaseEntity {
 
     private String summary;
 
+    @Column(name = "is_important")
+    private Boolean isImportant;
+
     @ElementCollection
     @CollectionTable(name = "tbl_mail_labels")
     @Column(nullable = false)
@@ -95,5 +98,9 @@ public class Mail extends BaseEntity {
 
     public void updateSummary(String summary) {
         this.summary = summary;
+    }
+
+    public void updateIsImportant(Boolean isImportant) {
+        this.isImportant = isImportant;
     }
 }
