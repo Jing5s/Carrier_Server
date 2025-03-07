@@ -37,7 +37,7 @@ public class CommandAuthService {
 
     public TokenResponse signIn(@Valid TokenRequest tokenRequest) {
         GoogleRefreshTokenResponse googleToken
-                = googleOAuthFacade.getGoogleRefreshToken(tokenRequest.token());
+                = googleOAuthFacade.getGoogleRefreshToken(tokenRequest.token(), tokenRequest.redirectUrl());
 
         GoogleInformationResponse userInfo
                 = googleInformationClient.getInformation(googleToken.access_token());
