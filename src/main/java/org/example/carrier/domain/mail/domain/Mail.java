@@ -55,7 +55,7 @@ public class Mail extends BaseEntity {
     private String summary;
 
     @Column(name = "is_important")
-    private Boolean isImportant;
+    private Boolean isImportant = false;
 
     @ElementCollection
     @CollectionTable(name = "tbl_mail_labels")

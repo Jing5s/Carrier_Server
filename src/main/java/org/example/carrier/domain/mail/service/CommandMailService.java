@@ -70,11 +70,7 @@ public class CommandMailService {
 
         GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(gmailId, accessToken);
 
-        GptBasicRequest request = GptMailSummaryRequest.of(
-                objectMapper, mail.getGmailId(), mail.getTitle(), gmailDetail.payload().getBody());
-
-        GptBasicResponse gptResponse = gptClient.getGptResponse("Bearer " + gptProperties.getToken(), request);
-        GptMailSummaryResponse response = (GptMailSummaryResponse) gptResponse.getResponse(objectMapper, GptMailSummaryResponse.class);
+        GptMailSummaryResponse response = summaryMail(mail, gmailDetail);
 
         mail.updateSummary(response.summary());
 
@@ -84,7 +80,7 @@ public class CommandMailService {
     public void batchSaveMail(User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
 
-        GmailListResponse gmailList = gmailAPIClient.getGmailList(accessToken);
+        GmailListResponse gmailList = gmailAPIClient.getGmailList("IMPORTANT", accessToken);
 
         gmailList.messages().forEach(message -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);
@@ -97,7 +93,8 @@ public class CommandMailService {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
-        Set<String> updateMailId = Optional.ofNullable(gmailAPIClient.getHistory(maxHistoryId, accessToken))
+        Set<String> updateMailId = Optional.ofNullable(gmailAPIClient.getHistory(
+                "IMPORTANT", "messageAdded", maxHistoryId, accessToken))
                 .map(GmailHistoryResponse::history)
                 .orElse(Collections.emptyList())
                 .stream()
@@ -106,9 +103,11 @@ public class CommandMailService {
 
         updateMailId.forEach(mailId -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
-            Mail newGmail = toMail(gmailDetail, cUser);
+            log.info("gmailId : {}", mailId);
 
+            Mail newGmail = toMail(gmailDetail, cUser);
             Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
+
             try {
                 if (gmail.isPresent()) {
                     gmail.get().update(newGmail);
@@ -120,9 +119,13 @@ public class CommandMailService {
                             mail.getPreview(), mail.getDate(), mail.getIsRead(), mail.getLabels());
 
                     GptBasicResponse gptResponse = gptClient.getGptResponse("Bearer " + gptProperties.getToken(), request);
-                    GptImportMailResponse response = (GptImportMailResponse) gptResponse.getResponse(objectMapper, GptMailSummaryResponse.class);
+                    GptImportMailResponse response = (GptImportMailResponse) gptResponse.getResponse(objectMapper, GptImportMailResponse.class);
 
                     mail.updateIsImportant(response.important());
+                    if (response.important()) {
+                        String summary = summaryMail(mail, gmailDetail).summary();
+                        mail.updateSummary(summary);
+                    }
                 }
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
@@ -134,6 +137,14 @@ public class CommandMailService {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
 
         gmailAPIClient.modifyLabels(gmailId, new ModifyLabelRequest(), "Bearer " + accessToken);
+    }
+
+    private GptMailSummaryResponse summaryMail(Mail mail, GmailDetailResponse gmailDetail) throws JsonProcessingException {
+        GptBasicRequest request = GptMailSummaryRequest.of(
+                objectMapper, mail.getGmailId(), mail.getTitle(), gmailDetail.payload().getBody());
+
+        GptBasicResponse gptResponse = gptClient.getGptResponse("Bearer " + gptProperties.getToken(), request);
+        return (GptMailSummaryResponse) gptResponse.getResponse(objectMapper, GptMailSummaryResponse.class);
     }
 
     private static Mail toMail(GmailDetailResponse gmail, User user) {

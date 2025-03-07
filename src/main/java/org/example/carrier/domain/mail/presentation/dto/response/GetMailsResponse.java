@@ -14,7 +14,8 @@ public record GetMailsResponse(
         String preview,
         LocalDateTime date,
         Boolean isRead,
-        List<String> labels
+        List<String> labels,
+        Boolean isImportant
 ) {
     public static GetMailsResponse of(Mail mail) {
         return new GetMailsResponse(
@@ -26,7 +27,8 @@ public record GetMailsResponse(
                 mail.getPreview(),
                 mail.getDate(),
                 mail.getIsRead(),
-                mail.getLabels()
+                mail.getLabels(),
+                mail.getIsImportant()
         );
     }
 }

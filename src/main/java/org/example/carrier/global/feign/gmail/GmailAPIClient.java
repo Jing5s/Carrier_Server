@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "GmailAPIClient", url = "https://gmail.googleapis.com/gmail/v1")
 public interface GmailAPIClient {
     @GetMapping("/users/me/messages")
-    GmailListResponse getGmailList(@RequestParam String access_token);
+    GmailListResponse getGmailList(
+            @RequestParam String labelIds,
+            @RequestParam String access_token
+    );
 
     @GetMapping("/users/me/messages/{id}")
     GmailDetailResponse getGmailDetail(
@@ -25,6 +28,8 @@ public interface GmailAPIClient {
 
     @GetMapping("/users/me/history")
     GmailHistoryResponse getHistory(
+            @RequestParam String labelId,
+            @RequestParam String historyTypes,
             @RequestParam Long startHistoryId,
             @RequestParam String access_token
     );

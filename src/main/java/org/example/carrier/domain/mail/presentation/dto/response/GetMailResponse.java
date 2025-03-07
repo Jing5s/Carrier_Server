@@ -15,7 +15,8 @@ public record GetMailResponse(
         LocalDateTime date,
         Boolean isRead,
         List<String> labels,
-        String body
+        String body,
+        String summary
 ) {
     public static GetMailResponse of(Mail mail, GmailPayload payload) {
         return new GetMailResponse(
@@ -27,7 +28,8 @@ public record GetMailResponse(
                 mail.getDate(),
                 mail.getIsRead(),
                 List.copyOf(mail.getLabels()),
-                payload.getBody()
+                payload.getBody(),
+                mail.getSummary()
         );
     }
 }
