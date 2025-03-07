@@ -21,13 +21,13 @@ public class GoogleOAuthFacade {
     private final GoogleOAuthClient googleOAuthClient;
     private final AuthProperties authProperties;
 
-    public GoogleRefreshTokenResponse getGoogleRefreshToken(String token) {
+    public GoogleRefreshTokenResponse getGoogleRefreshToken(String token, String redirectUrl) {
         return googleOAuthClient.getRefreshToken(
                 authProperties.getClientId(),
                 authProperties.getClientSecret(),
                 token,
                 "authorization_code",
-                authProperties.getRedirectUrl()
+                redirectUrl
         );
     }
 

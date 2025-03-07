@@ -2,6 +2,7 @@ package org.example.carrier.domain.user.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.user.presentation.dto.request.ReissueRequest;
 import org.example.carrier.domain.user.presentation.dto.request.TokenRequest;
 import org.example.carrier.domain.user.presentation.dto.response.AccessTokenResponse;
 import org.example.carrier.domain.user.service.QueryAuthService;
@@ -30,8 +31,8 @@ public class QueryAuthController {
     @PostMapping("/reissue")
     @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissueToken(
-            @Valid @RequestBody TokenRequest tokenRequest
+            @Valid @RequestBody ReissueRequest reissueRequest
     ) {
-        return queryAuthService.reissueToken(tokenRequest.token());
+        return queryAuthService.reissueToken(reissueRequest.token());
     }
 }
