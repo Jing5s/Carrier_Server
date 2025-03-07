@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CustomService
-@Slf4j
 public class CommandMailService {
     private final MailRepository mailRepository;
     private final CustomMailRepository customMailRepository;
@@ -44,7 +43,6 @@ public class CommandMailService {
     private final ObjectMapper objectMapper;
     private final GptClient gptClient;
     private final GptProperties gptProperties;
-    private final QueryMailService queryMailService;
 
     public GetMailResponse getGmailDetail(String gmailId, User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
@@ -103,7 +101,6 @@ public class CommandMailService {
 
         updateMailId.forEach(mailId -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
-            log.info("gmailId : {}", mailId);
 
             Mail newGmail = toMail(gmailDetail, cUser);
             Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
