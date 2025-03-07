@@ -3,6 +3,7 @@ package org.example.carrier.domain.mail.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
@@ -24,7 +25,6 @@ import org.example.carrier.global.feign.gpt.dto.request.GptBasicRequest;
 import org.example.carrier.global.feign.gpt.dto.request.GptMailSummaryRequest;
 import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
-import org.jsoup.Jsoup;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CustomService
+@Slf4j
 public class CommandMailService {
     private final MailRepository mailRepository;
     private final CustomMailRepository customMailRepository;
@@ -120,17 +121,16 @@ public class CommandMailService {
     }
 
     private static Mail toMail(GmailDetailResponse gmail, User user) {
-        String body = gmail.payload().getBody();
-        body = Jsoup.parse(body).text();
-        body = body.substring(0, Math.min(body.length(), 500));
-        body = body.replaceAll("\\s{2,}", " ");
+        String from = gmail.payload().getFrom();
+        int index = from.indexOf(" <");
+        String title = (index != -1) ? from.substring(0, index) : from;
 
         return new Mail(
-                gmail.id(), gmail.threadId(), gmail.snippet(),
-                gmail.payload().getFrom(),
+                gmail.id(), gmail.threadId(), title,
+                from,
                 gmail.payload().getTo(),
                 gmail.payload().getSubject(),
-                body,
+                gmail.snippet(),
                 gmail.payload().getDate(),
                 gmail.isRead(),
                 gmail.historyId(),

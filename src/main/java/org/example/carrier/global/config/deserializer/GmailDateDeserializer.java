@@ -11,7 +11,17 @@ public class GmailDateDeserializer {
 
     private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
             .parseCaseInsensitive()
-            .appendPattern("EEE, d MMM yyyy HH:mm:ss ")
+            .appendPattern("EEE,")
+            .optionalStart()
+            .appendLiteral(' ')
+            .optionalEnd()
+            .optionalStart()
+            .appendLiteral(' ')
+            .optionalEnd()
+            .appendPattern("d MMM yyyy HH:mm:ss")
+            .optionalStart()
+            .appendLiteral(' ')
+            .optionalEnd()
             .optionalStart()
             .appendPattern("z")
             .optionalEnd()
@@ -30,7 +40,7 @@ public class GmailDateDeserializer {
             .toFormatter(Locale.ENGLISH);
 
     public static LocalDateTime parse(String dateStr) {
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateStr, FORMATTER);
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateStr.replaceAll("\\s+", " "), FORMATTER);
         return zonedDateTime.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
     }
 }
