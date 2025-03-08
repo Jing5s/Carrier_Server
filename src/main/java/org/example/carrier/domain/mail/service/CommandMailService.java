@@ -154,7 +154,7 @@ public class CommandMailService {
                 gmail.payload().getTo(),
                 gmail.payload().getSubject(),
                 gmail.snippet(),
-                gmail.payload().getDate(),
+                gmail.getDate(),
                 gmail.isRead(),
                 gmail.historyId(),
                 gmail.labelIds(),

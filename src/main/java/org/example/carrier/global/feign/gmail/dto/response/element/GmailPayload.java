@@ -1,8 +1,5 @@
 package org.example.carrier.global.feign.gmail.dto.response.element;
 
-import org.example.carrier.global.config.deserializer.GmailDateDeserializer;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record GmailPayload(
@@ -21,11 +18,6 @@ public record GmailPayload(
 
     public String getSubject() {
         return getHeaderValue(headers, "Subject");
-    }
-
-    public LocalDateTime getDate() {
-        String dateStr = getHeaderValue(headers, "Date");
-        return GmailDateDeserializer.parse(dateStr);
     }
 
     public String getBody() {
