@@ -6,6 +6,7 @@ import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.user.domain.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.example.carrier.domain.mail.domain.QMail.mail;
@@ -23,6 +24,18 @@ public class CustomMailRepositoryImpl implements CustomMailRepository {
                 .leftJoin(mail.labels).fetchJoin()
                 .where(mail.user.eq(user))
                 .orderBy(mail.date.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<Mail> findAllByTodayAndUser(User user) {
+        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        return queryFactory
+                .selectFrom(mail)
+                .where(mail.date.between(startOfDay, endOfDay)
+                        .and(mail.user.eq(user)))
                 .fetch();
     }
 
