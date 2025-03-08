@@ -3,7 +3,6 @@ package org.example.carrier.domain.mail.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
@@ -64,7 +63,7 @@ public class CommandMailService {
                 .orElseThrow(() -> MailNotFoundException.EXCEPTION);
 
         if (mail.getSummary() != null)
-            return new GetMailSummaryResponse(mail.getSummary());
+            return new GetMailSummaryResponse(mail.getGmailId(), mail.getSummary());
 
         GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(gmailId, accessToken);
 
@@ -72,7 +71,7 @@ public class CommandMailService {
 
         mail.updateSummary(response.summary());
 
-        return new GetMailSummaryResponse(response.summary());
+        return new GetMailSummaryResponse(response.gmailId(), response.summary());
     }
 
     public void batchSaveMail(User cUser) {
