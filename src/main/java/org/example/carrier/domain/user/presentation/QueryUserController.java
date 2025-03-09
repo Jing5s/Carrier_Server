@@ -20,7 +20,7 @@ public class QueryUserController {
         return queryUserService.getUserInfo(UserFacade.getCurrentUser());
     }
 
-    @GetMapping("/summary")
+    @GetMapping("/tips")
     public Object getTodaySummary() throws JsonProcessingException {
         return queryUserService.getTodaySummary(UserFacade.getCurrentUser());
     }
