@@ -52,6 +52,7 @@ public class Mail extends BaseEntity {
     @Column(name = "history_id", nullable = false)
     private Long historyId;
 
+    @Column(columnDefinition = "TEXT")
     private String summary;
 
     @Column(name = "is_important")

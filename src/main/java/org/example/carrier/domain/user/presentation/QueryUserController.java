@@ -1,5 +1,6 @@
 package org.example.carrier.domain.user.presentation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.example.carrier.domain.user.presentation.dto.response.UserProfileResponse;
@@ -17,5 +18,10 @@ public class QueryUserController {
     @GetMapping
     public UserProfileResponse getUserProfile() {
         return queryUserService.getUserInfo(UserFacade.getCurrentUser());
+    }
+
+    @GetMapping("/summary")
+    public Object getTodaySummary() throws JsonProcessingException {
+        return queryUserService.getTodaySummary(UserFacade.getCurrentUser());
     }
 }
