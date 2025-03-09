@@ -21,7 +21,7 @@ public record MailElement(
                 mail.getTitle(),
                 mail.getFrom(),
                 mail.getTo(),
-                mail.getSubject(),
+                mail.getSummary(),
                 mail.getDate(),
                 mail.getIsRead(),
                 mail.getLabels()

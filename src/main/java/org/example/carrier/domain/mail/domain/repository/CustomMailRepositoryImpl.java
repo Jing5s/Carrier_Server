@@ -35,7 +35,8 @@ public class CustomMailRepositoryImpl implements CustomMailRepository {
         return queryFactory
                 .selectFrom(mail)
                 .where(mail.date.between(startOfDay, endOfDay)
-                        .and(mail.user.eq(user)))
+                        .and(mail.user.eq(user))
+                        .and(mail.isImportant.isTrue()))
                 .fetch();
     }
 
