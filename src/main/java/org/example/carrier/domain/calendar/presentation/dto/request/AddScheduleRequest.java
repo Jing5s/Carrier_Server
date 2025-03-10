@@ -2,8 +2,8 @@ package org.example.carrier.domain.calendar.presentation.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.calendar.domain.Schedule;
+import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.user.domain.User;
 
 import java.time.LocalDateTime;
@@ -17,6 +17,8 @@ public record AddScheduleRequest(
 
         @NotNull(message = "isRepeat이 비어있습니다.")
         Boolean isRepeat,
+
+        String memo,
 
         @NotNull(message = "category이 비어있습니다.")
         Long categoryId,
@@ -33,6 +35,7 @@ public record AddScheduleRequest(
                 .title(title)
                 .allDay(allDay)
                 .isRepeat(isRepeat)
+                .memo(memo)
                 .startDate(startDate)
                 .endDate(endDate)
                 .location(location)

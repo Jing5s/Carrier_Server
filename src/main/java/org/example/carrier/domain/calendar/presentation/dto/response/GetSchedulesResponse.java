@@ -9,6 +9,7 @@ public record GetSchedulesResponse(
         String title,
         Boolean allDay,
         Boolean isRepeat,
+        String memo,
         LocalDateTime startDate,
         LocalDateTime endDate,
         GetCategoriesResponse category
@@ -16,7 +17,7 @@ public record GetSchedulesResponse(
     public GetSchedulesResponse(Schedule schedule) {
         this(
                 schedule.getTitle(), schedule.getAllDay(),
-                schedule.getIsRepeat(), schedule.getStartDate(),
+                schedule.getIsRepeat(), schedule.getMemo(), schedule.getStartDate(),
                 schedule.getEndDate(), new GetCategoriesResponse(schedule.getCategory())
         );
     }

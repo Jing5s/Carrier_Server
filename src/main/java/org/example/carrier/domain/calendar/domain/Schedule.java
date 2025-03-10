@@ -30,6 +30,9 @@ public class Schedule extends BaseEntity {
     @Column(name = "is_repeat", nullable = false)
     private Boolean isRepeat;
 
+    @Column(nullable = false)
+    private String memo;
+
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
@@ -53,6 +56,7 @@ public class Schedule extends BaseEntity {
     public Schedule(String title,
                     Boolean allDay,
                     Boolean isRepeat,
+                    String memo,
                     LocalDateTime startDate,
                     LocalDateTime endDate,
                     String location,
@@ -62,6 +66,7 @@ public class Schedule extends BaseEntity {
         this.title = title;
         this.allDay = allDay;
         this.isRepeat = isRepeat;
+        this.memo = memo;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
