@@ -77,7 +77,7 @@ public class CommandMailService {
     public void batchSaveMail(User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
 
-        GmailListResponse gmailList = gmailAPIClient.getGmailList("IMPORTANT", accessToken);
+        GmailListResponse gmailList = gmailAPIClient.getGmailList("-from:me", accessToken);
 
         gmailList.messages().forEach(message -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);
@@ -91,7 +91,7 @@ public class CommandMailService {
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
         Set<String> updateMailId = Optional.ofNullable(gmailAPIClient.getHistory(
-                "IMPORTANT", "messageAdded", maxHistoryId, accessToken))
+                "INBOX", "messageAdded", maxHistoryId, accessToken))
                 .map(GmailHistoryResponse::history)
                 .orElse(Collections.emptyList())
                 .stream()
