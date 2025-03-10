@@ -30,7 +30,6 @@ public class Schedule extends BaseEntity {
     @Column(name = "is_repeat", nullable = false)
     private Boolean isRepeat;
 
-    @Column(nullable = false)
     private String memo;
 
     @Column(name = "start_date", nullable = false)
