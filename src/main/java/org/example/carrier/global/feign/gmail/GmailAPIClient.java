@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface GmailAPIClient {
     @GetMapping("/users/me/messages")
     GmailListResponse getGmailList(
-            @RequestParam String q,
             @RequestParam String access_token
     );
 
@@ -28,7 +27,6 @@ public interface GmailAPIClient {
 
     @GetMapping("/users/me/history")
     GmailHistoryResponse getHistory(
-            @RequestParam String labelId,
             @RequestParam String historyTypes,
             @RequestParam Long startHistoryId,
             @RequestParam String access_token
