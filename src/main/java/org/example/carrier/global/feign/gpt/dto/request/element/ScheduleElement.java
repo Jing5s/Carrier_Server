@@ -1,6 +1,7 @@
 package org.example.carrier.global.feign.gpt.dto.request.element;
 
 import org.example.carrier.domain.calendar.domain.Schedule;
+import org.example.carrier.domain.category.domain.type.Color;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ public record ScheduleElement(
         Boolean allDay,
         Boolean isRepeat,
         Long categoryId,
+        Color categoryColor,
         LocalDateTime startDate,
         LocalDateTime endDate,
         String location
@@ -19,6 +21,7 @@ public record ScheduleElement(
                 schedule.getAllDay(),
                 schedule.getIsRepeat(),
                 schedule.getCategory().getId(),
+                schedule.getCategory().getColor(),
                 schedule.getStartDate(),
                 schedule.getEndDate(),
                 schedule.getLocation()
