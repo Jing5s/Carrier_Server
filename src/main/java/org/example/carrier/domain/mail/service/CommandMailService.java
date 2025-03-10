@@ -81,6 +81,7 @@ public class CommandMailService {
 
         gmailList.messages().forEach(message -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);
+            if (gmailDetail.labelIds().contains("SENT")) { return; }
 
             mailRepository.save(toMail(gmailDetail, cUser));
         });
@@ -100,6 +101,7 @@ public class CommandMailService {
 
         updateMailId.forEach(mailId -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
+            if (gmailDetail.labelIds().contains("SENT")) { return; }
 
             Mail newGmail = toMail(gmailDetail, cUser);
             Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
