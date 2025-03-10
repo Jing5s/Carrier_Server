@@ -77,7 +77,7 @@ public class CommandMailService {
     public void batchSaveMail(User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
 
-        GmailListResponse gmailList = gmailAPIClient.getGmailList(accessToken);
+        GmailListResponse gmailList = gmailAPIClient.getGmailList("label:inbox a", accessToken);
 
         gmailList.messages().forEach(message -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);

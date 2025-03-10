@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface GmailAPIClient {
     @GetMapping("/users/me/messages")
     GmailListResponse getGmailList(
+            @RequestParam String q,
             @RequestParam String access_token
     );
 
