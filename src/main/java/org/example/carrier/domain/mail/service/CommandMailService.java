@@ -17,6 +17,7 @@ import org.example.carrier.global.error.exception.GlobalException;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
 import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
+import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
 import org.example.carrier.global.feign.gpt.GptClient;
@@ -28,6 +29,7 @@ import org.example.carrier.global.feign.gpt.dto.response.GptImportMailResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -98,8 +100,10 @@ public class CommandMailService {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
-        Set<String> updateMailId = gmailAPIClient.getHistory(maxHistoryId, accessToken)
-                .history().stream()
+        List<GmailHistory> histories = gmailAPIClient.getHistory(maxHistoryId, accessToken).history();
+        if (histories == null) { return; }
+
+        Set<String> updateMailId = histories.stream()
                 .map(GmailHistory::getMailId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
