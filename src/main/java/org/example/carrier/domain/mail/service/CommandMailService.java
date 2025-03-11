@@ -13,10 +13,10 @@ import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.facade.GoogleOAuthFacade;
 import org.example.carrier.global.annotation.CustomService;
 import org.example.carrier.global.config.properties.GptProperties;
+import org.example.carrier.global.error.exception.GlobalException;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
 import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
-import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
 import org.example.carrier.global.feign.gpt.GptClient;
@@ -27,7 +27,9 @@ import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptImportMailResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,6 +44,8 @@ public class CommandMailService {
     private final ObjectMapper objectMapper;
     private final GptClient gptClient;
     private final GptProperties gptProperties;
+
+    private final List<String> exclusionLabels = Arrays.asList("SENT", "DRAFT");
 
     public GetMailResponse getGmailDetail(String gmailId, User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
@@ -81,7 +85,10 @@ public class CommandMailService {
 
         gmailList.messages().forEach(message -> {
             GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(message.id(), accessToken);
-            if (gmailDetail.labelIds().contains("SENT")) { return; }
+            if (gmailDetail.labelIds().stream()
+                    .anyMatch(exclusionLabels::contains)) {
+                return;
+            }
 
             mailRepository.save(toMail(gmailDetail, cUser));
         });
@@ -91,22 +98,19 @@ public class CommandMailService {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
-        Set<String> updateMailId = Optional.ofNullable(gmailAPIClient.getHistory(
-                maxHistoryId, accessToken))
-                .map(GmailHistoryResponse::history)
-                .orElse(Collections.emptyList())
-                .stream()
-                .collect(Collectors.groupingBy(GmailHistory::getMailId))
-                .keySet();
+        Set<String> updateMailId = gmailAPIClient.getHistory(maxHistoryId, accessToken)
+                .history().stream()
+                .map(GmailHistory::getMailId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
         updateMailId.forEach(mailId -> {
-            GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
-            if (gmailDetail.labelIds().contains("SENT")) { return; }
-
-            Mail newGmail = toMail(gmailDetail, cUser);
-            Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
-
             try {
+                GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
+
+                Mail newGmail = toMail(gmailDetail, cUser);
+                Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
+
                 if (gmail.isPresent()) {
                     gmail.get().update(newGmail);
                 } else {
@@ -125,6 +129,7 @@ public class CommandMailService {
                         mail.updateSummary(summary);
                     }
                 }
+            } catch (GlobalException ignored) {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

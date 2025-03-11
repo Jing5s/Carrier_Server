@@ -7,6 +7,12 @@ public record GmailHistory(
         List<GmailListDetail> messages
 ) {
     public String getMailId() {
-        return messages.get(0).id();
+        GmailListDetail gmailListDetail = messages.get(0);
+        if (gmailListDetail.labelIds() == null)
+            return gmailListDetail.id();
+        if (!gmailListDetail.labelIds().contains("INBOX"))
+            return null;
+
+        return gmailListDetail.id();
     }
 }

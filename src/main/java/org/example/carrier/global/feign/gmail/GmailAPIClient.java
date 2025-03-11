@@ -31,7 +31,7 @@ public interface GmailAPIClient {
             @RequestParam String access_token
     );
 
-    @PostMapping("users/me/messages/{messageId}/modify")
+    @PostMapping("/users/me/messages/{messageId}/modify")
     Object modifyLabels(
             @PathVariable String messageId,
             @RequestBody ModifyLabelRequest request,
