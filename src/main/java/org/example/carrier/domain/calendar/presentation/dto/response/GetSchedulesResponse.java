@@ -12,13 +12,14 @@ public record GetSchedulesResponse(
         String memo,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        GetCategoriesResponse category
+        GetCategoriesResponse category,
+        String location
 ) {
     public GetSchedulesResponse(Schedule schedule) {
         this(
-                schedule.getTitle(), schedule.getAllDay(),
-                schedule.getIsRepeat(), schedule.getMemo(), schedule.getStartDate(),
-                schedule.getEndDate(), new GetCategoriesResponse(schedule.getCategory())
+                schedule.getTitle(), schedule.getAllDay(), schedule.getIsRepeat(),
+                schedule.getMemo(), schedule.getStartDate(), schedule.getEndDate(),
+                new GetCategoriesResponse(schedule.getCategory()), schedule.getLocation()
         );
     }
 }
