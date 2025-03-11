@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.example.carrier.domain.calendar.domain.QTodo.todo;
+import static org.example.carrier.domain.todo.domain.QTodo.todo;
 
 @RequiredArgsConstructor
 @Repository
