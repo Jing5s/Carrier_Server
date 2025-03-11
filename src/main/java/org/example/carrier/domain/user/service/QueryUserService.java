@@ -64,7 +64,7 @@ public class QueryUserService {
 
         LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
-        return scheduleRepository.findScheduleByDate(startOfDay, endOfDay, categories, cUser).stream()
+        return scheduleRepository.findScheduleByDateAndCategories(startOfDay, endOfDay, categories, cUser).stream()
                 .map(ScheduleElement::from)
                 .toList();
     }
