@@ -17,7 +17,6 @@ import org.example.carrier.global.error.exception.GlobalException;
 import org.example.carrier.global.feign.gmail.GmailAPIClient;
 import org.example.carrier.global.feign.gmail.dto.request.ModifyLabelRequest;
 import org.example.carrier.global.feign.gmail.dto.response.GmailDetailResponse;
-import org.example.carrier.global.feign.gmail.dto.response.GmailHistoryResponse;
 import org.example.carrier.global.feign.gmail.dto.response.GmailListResponse;
 import org.example.carrier.global.feign.gmail.dto.response.element.GmailHistory;
 import org.example.carrier.global.feign.gpt.GptClient;
@@ -29,7 +28,6 @@ import org.example.carrier.global.feign.gpt.dto.response.GptImportMailResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMailSummaryResponse;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,7 +45,7 @@ public class CommandMailService {
     private final GptClient gptClient;
     private final GptProperties gptProperties;
 
-    private final List<String> exclusionLabels = Arrays.asList("SENT", "DRAFT");
+    private final List<String> exclusionLabels = Arrays.asList("SENT", "DRAFT", "TRASH");
 
     public GetMailResponse getGmailDetail(String gmailId, User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
@@ -101,7 +99,9 @@ public class CommandMailService {
         Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
 
         List<GmailHistory> histories = gmailAPIClient.getHistory(maxHistoryId, accessToken).history();
-        if (histories == null) { return; }
+        if (histories == null) {
+            return;
+        }
 
         Set<String> updateMailId = histories.stream()
                 .map(GmailHistory::getMailId)
@@ -111,6 +111,10 @@ public class CommandMailService {
         updateMailId.forEach(mailId -> {
             try {
                 GmailDetailResponse gmailDetail = gmailAPIClient.getGmailDetail(mailId, accessToken);
+                if (gmailDetail.labelIds().stream()
+                        .anyMatch(exclusionLabels::contains)) {
+                    return;
+                }
 
                 Mail newGmail = toMail(gmailDetail, cUser);
                 Optional<Mail> gmail = mailRepository.findByGmailId(mailId);
