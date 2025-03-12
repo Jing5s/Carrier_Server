@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TodoRepository extends JpaRepository<Todo, Long> {
+public interface TodoRepository extends JpaRepository<Todo, Long>, CustomTodoRepository {
     List<Todo> findAllByDateAndUser(LocalDate date, User user);
     Optional<Todo> findByIdAndUser(Long id, User user);
 }

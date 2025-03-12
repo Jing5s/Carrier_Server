@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.mail.domain.Mail;
-import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.mail.exception.MailNotFoundException;
 import org.example.carrier.domain.mail.presentation.dto.response.GetMailResponse;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
 @CustomService
 public class CommandMailService {
     private final MailRepository mailRepository;
-    private final CustomMailRepository customMailRepository;
     private final GmailAPIClient gmailAPIClient;
     private final GoogleOAuthFacade googleOAuthFacade;
     private final ObjectMapper objectMapper;
@@ -96,7 +94,7 @@ public class CommandMailService {
 
     public void updateMail(User cUser) {
         String accessToken = googleOAuthFacade.getGoogleAccessToken(cUser);
-        Long maxHistoryId = customMailRepository.findMaxHistoryId(cUser);
+        Long maxHistoryId = mailRepository.findMaxHistoryId(cUser);
 
         List<GmailHistory> histories = gmailAPIClient.getHistory(maxHistoryId, accessToken).history();
         if (histories == null) {

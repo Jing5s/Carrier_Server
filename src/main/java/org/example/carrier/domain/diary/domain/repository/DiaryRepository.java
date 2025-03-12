@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, Long> {
+public interface DiaryRepository extends JpaRepository<Diary, Long>, CustomDiaryRepository {
     Optional<Diary> findByIdAndUser(Long id, User user);
     Boolean existsByDate(LocalDate date);
 }

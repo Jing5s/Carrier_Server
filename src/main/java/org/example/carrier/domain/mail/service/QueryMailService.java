@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.mail.domain.Mail;
-import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.mail.exception.MailNotFoundException;
 import org.example.carrier.domain.mail.presentation.dto.response.GetMailsResponse;
@@ -26,7 +25,6 @@ import java.util.List;
 @CustomService(readOnly = true)
 public class QueryMailService {
     private final MailRepository mailRepository;
-    private final CustomMailRepository customMailRepository;
     private final GmailAPIClient gmailAPIClient;
     private final GoogleOAuthFacade googleOAuthFacade;
     private final ObjectMapper objectMapper;
@@ -34,7 +32,7 @@ public class QueryMailService {
     private final GptProperties gptProperties;
 
     public List<GetMailsResponse> getMails(User cUser) {
-        return customMailRepository.findAllByUserOrderByDate(cUser).stream()
+        return mailRepository.findAllByUserOrderByDate(cUser).stream()
                 .map(GetMailsResponse::of)
                 .toList();
     }

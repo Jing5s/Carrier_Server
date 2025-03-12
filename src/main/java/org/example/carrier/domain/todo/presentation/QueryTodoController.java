@@ -3,7 +3,7 @@ package org.example.carrier.domain.todo.presentation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.todo.domain.Todo;
-import org.example.carrier.domain.todo.domain.repository.CustomTodoRepository;
+import org.example.carrier.domain.todo.domain.repository.TodoRepository;
 import org.example.carrier.domain.todo.presentation.dto.request.GetTodosRequest;
 import org.example.carrier.domain.todo.presentation.dto.response.TodoResponse;
 import org.example.carrier.domain.user.facade.UserFacade;
@@ -18,12 +18,12 @@ import java.util.List;
 @RequestMapping("/todos")
 @RestController
 public class QueryTodoController {
-    private final CustomTodoRepository queryTodoService;
+    private final TodoRepository todoRepository;
 
     @GetMapping
     public List<TodoResponse> getTodos(
             @Valid @ModelAttribute GetTodosRequest request) {
-        List<Todo> todos = queryTodoService.findScheduleByDate(
+        List<Todo> todos = todoRepository.findScheduleByDate(
                 request.startDate(), request.endDate(), UserFacade.getCurrentUser());
 
         return todos.stream()
