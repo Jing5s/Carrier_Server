@@ -5,9 +5,11 @@ import org.example.carrier.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Optional<Diary> findByIdAndUser(Long id, User user);
+    Boolean existsByDate(LocalDate date);
 }

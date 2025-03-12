@@ -12,6 +12,7 @@ public enum ErrorCode {
 
     // diary
     DIARY_NOT_FOUND(404, "DIARY-404-1", "Diary Not Found."),
+    DIARY_IS_WRITE(400, "DIARY-400-2", "Diary Is Write."),
 
     // mail
     MAIL_NOT_FOUND(404, "MAIL-404-1", "Mail Not Found."),

@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.entity.BaseEntity;
 
+import java.time.LocalDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -26,6 +28,9 @@ public class Diary extends BaseEntity {
     @Column(nullable = false, length = 1)
     private String emoji;
 
+    @Column(nullable = false)
+    private LocalDate date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -35,6 +40,7 @@ public class Diary extends BaseEntity {
         this.content = content;
         this.emoji = emoji;
         this.user = user;
+        this.date = LocalDate.now();
     }
 
     public void update(String title, String content, String emoji) {

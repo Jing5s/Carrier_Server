@@ -4,11 +4,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.diary.domain.Diary;
 import org.example.carrier.domain.diary.domain.repository.DiaryRepository;
+import org.example.carrier.domain.diary.exception.DiaryIsWriteException;
 import org.example.carrier.domain.diary.exception.DiaryNotFoundException;
 import org.example.carrier.domain.diary.presentation.dto.request.CreateDiaryRequest;
 import org.example.carrier.domain.diary.presentation.dto.request.UpdateDiaryRequest;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
+
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @CustomService
@@ -16,6 +19,9 @@ public class CommandDiaryService {
     private final DiaryRepository diaryRepository;
 
     public Long createDiary(@Valid CreateDiaryRequest request, User cUser) {
+        Boolean isWrite = diaryRepository.existsByDate(LocalDate.now());
+        if (isWrite) { throw DiaryIsWriteException.EXCEPTION; }
+
         return diaryRepository.save(request.toDiary(cUser)).getId();
     }
 
