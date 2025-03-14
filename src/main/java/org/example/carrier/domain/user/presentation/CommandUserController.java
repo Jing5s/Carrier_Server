@@ -7,6 +7,7 @@ import org.example.carrier.domain.user.presentation.dto.request.UpdateNotificati
 import org.example.carrier.domain.user.presentation.dto.request.UpdateProfileRequest;
 import org.example.carrier.domain.user.service.CommandUserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class CommandUserController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProfile(
-            @Valid @RequestBody UpdateProfileRequest request
+            @Valid @ModelAttribute UpdateProfileRequest request
     ) {
         commandUserService.updateProfile(request, UserFacade.getCurrentUser());
     }

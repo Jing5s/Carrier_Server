@@ -2,10 +2,9 @@ package org.example.carrier.domain.todo.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.carrier.domain.todo.domain.Todo;
-import org.example.carrier.domain.todo.domain.repository.TodoRepository;
 import org.example.carrier.domain.todo.presentation.dto.request.GetTodosRequest;
 import org.example.carrier.domain.todo.presentation.dto.response.TodoResponse;
+import org.example.carrier.domain.todo.service.QueryTodoService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,16 +17,12 @@ import java.util.List;
 @RequestMapping("/todos")
 @RestController
 public class QueryTodoController {
-    private final TodoRepository todoRepository;
+    private final QueryTodoService queryTodoService;
 
     @GetMapping
     public List<TodoResponse> getTodos(
-            @Valid @ModelAttribute GetTodosRequest request) {
-        List<Todo> todos = todoRepository.findScheduleByDate(
-                request.startDate(), request.endDate(), UserFacade.getCurrentUser());
-
-        return todos.stream()
-                .map(TodoResponse::new)
-                .toList();
+            @Valid @ModelAttribute GetTodosRequest request
+    ) {
+        return queryTodoService.getTodos(request, UserFacade.getCurrentUser());
     }
 }
