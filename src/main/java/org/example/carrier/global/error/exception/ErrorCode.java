@@ -17,6 +17,9 @@ public enum ErrorCode {
     // mail
     MAIL_NOT_FOUND(404, "MAIL-404-1", "Mail Not Found."),
 
+    // schedule
+    SCHEDULE_NOT_FOUND(404, "SCHEDULE-404-1", "Schedule Not Found."),
+
     // category
     CATEGORY_NOT_FOUND(404, "CATEGORY-404-1", "Category Not Found."),
 
