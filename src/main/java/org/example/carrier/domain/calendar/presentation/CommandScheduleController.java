@@ -7,7 +7,9 @@ import org.example.carrier.domain.calendar.presentation.dto.request.UpdateSchedu
 import org.example.carrier.domain.calendar.service.CommandScheduleService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,13 @@ public class CommandScheduleController {
             @Valid @RequestBody UpdateScheduleRequest request
     ) {
         commandScheduleService.updateSchedule(request, UserFacade.getCurrentUser());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSchedule(
+            @PathVariable Long id
+    ) {
+        commandScheduleService.deleteSchedule(id, UserFacade.getCurrentUser());
     }
 }

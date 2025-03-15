@@ -41,7 +41,7 @@ public class Schedule extends BaseEntity {
     private String location;
 
     @Column(name = "is_editable", nullable = false)
-    private boolean isEditable = true;
+    private Boolean isEditable = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -59,7 +59,6 @@ public class Schedule extends BaseEntity {
                     LocalDateTime startDate,
                     LocalDateTime endDate,
                     String location,
-                    boolean isEditable,
                     User user,
                     Category category) {
         this.title = title;
@@ -69,8 +68,22 @@ public class Schedule extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
-        this.isEditable = isEditable;
         this.user = user;
+        this.category = category;
+    }
+
+    public void update(
+            String title, Boolean allDay, Boolean isRepeat, String memo,
+            LocalDateTime startDate, LocalDateTime endDate,
+            String location, Category category
+    ) {
+        this.title = title;
+        this.allDay = allDay;
+        this.isRepeat = isRepeat;
+        this.memo = memo;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.location = location;
         this.category = category;
     }
 }

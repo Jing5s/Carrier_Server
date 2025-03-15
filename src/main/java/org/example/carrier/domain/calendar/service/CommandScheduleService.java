@@ -2,6 +2,7 @@ package org.example.carrier.domain.calendar.service;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.calendar.domain.Schedule;
 import org.example.carrier.domain.calendar.domain.repository.ScheduleRepository;
 import org.example.carrier.domain.calendar.exception.ScheduleNotFoundException;
 import org.example.carrier.domain.calendar.presentation.dto.request.AddScheduleRequest;
@@ -29,7 +30,18 @@ public class CommandScheduleService {
         Category category = categoryRepository.findByIdAndUser(request.categoryId(), cUser)
                 .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
 
-        scheduleRepository.findByIdAndUser(request.id(), cUser)
+        Schedule schedule = scheduleRepository.findByIdAndUser(request.id(), cUser)
                 .orElseThrow(() -> ScheduleNotFoundException.EXCEPTION);
+
+        schedule.update(request.title(), request.allDay(), request.isRepeat(),
+                request.memo(), request.startDate(), request.endDate(),
+                request.location(), category);
+    }
+
+    public void deleteSchedule(Long id, User cUser) {
+        Schedule schedule = scheduleRepository.findByIdAndUser(id, cUser)
+                .orElseThrow(() -> ScheduleNotFoundException.EXCEPTION);
+
+        scheduleRepository.delete(schedule);
     }
 }
