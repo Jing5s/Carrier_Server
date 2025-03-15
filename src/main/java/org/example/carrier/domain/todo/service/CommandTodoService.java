@@ -33,4 +33,11 @@ public class CommandTodoService {
 
         todo.changeDoneStatus();
     }
+
+    public void deleteTodo(Long id, User cUser) {
+        Todo todo = todoRepository.findByIdAndUser(id, cUser)
+                .orElseThrow(() -> TodoNotFoundException.EXCEPTION);
+
+        todoRepository.delete(todo);
+    }
 }
