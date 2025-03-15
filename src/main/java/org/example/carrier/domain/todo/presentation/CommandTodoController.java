@@ -3,6 +3,7 @@ package org.example.carrier.domain.todo.presentation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.todo.presentation.dto.request.AddTodoRequest;
+import org.example.carrier.domain.todo.presentation.dto.request.UpdateTodoRequest;
 import org.example.carrier.domain.todo.service.CommandTodoService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,14 @@ public class CommandTodoController {
             @Valid @RequestBody AddTodoRequest request
     ) {
         commandTodoService.createTodo(request, UserFacade.getCurrentUser());
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTodo(
+            @Valid @RequestBody UpdateTodoRequest request
+    ) {
+        commandTodoService.updateTodo(request, UserFacade.getCurrentUser());
     }
 
     @PatchMapping("/change/{id}")

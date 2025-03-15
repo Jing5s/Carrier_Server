@@ -57,6 +57,16 @@ public class Todo extends BaseEntity {
         this.user = user;
     }
 
+    public void update(String title, LocalDate date, Boolean isRepeat,
+                       Priority priority, String memo, String location) {
+        this.title = title;
+        this.date = date;
+        this.isRepeat = isRepeat;
+        this.priority = priority;
+        this.memo = memo;
+        this.location = location;
+    }
+
     public void changeDoneStatus() {
         isDone = !isDone;
     }

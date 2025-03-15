@@ -6,6 +6,7 @@ import org.example.carrier.domain.todo.domain.Todo;
 import org.example.carrier.domain.todo.domain.repository.TodoRepository;
 import org.example.carrier.domain.todo.exception.TodoNotFoundException;
 import org.example.carrier.domain.todo.presentation.dto.request.AddTodoRequest;
+import org.example.carrier.domain.todo.presentation.dto.request.UpdateTodoRequest;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
 
@@ -16,6 +17,14 @@ public class CommandTodoService {
 
     public void createTodo(@Valid AddTodoRequest request, User cUser) {
         todoRepository.save(request.toTodo(cUser));
+    }
+
+    public void updateTodo(@Valid UpdateTodoRequest request, User cUser) {
+        Todo todo = todoRepository.findByIdAndUser(request.id(), cUser)
+                .orElseThrow(() -> TodoNotFoundException.EXCEPTION);
+
+        todo.update(request.title(), request.date(), request.isRepeat(),
+                request.priority(), request.memo(), request.memo());
     }
 
     public void changeDoneStatus(Long id, User cUser) {
