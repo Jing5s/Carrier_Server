@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.example.carrier.domain.user.presentation.dto.request.UpdateNotificationRequest;
+import org.example.carrier.domain.user.presentation.dto.request.UpdatePictureRequest;
 import org.example.carrier.domain.user.presentation.dto.request.UpdateProfileRequest;
 import org.example.carrier.domain.user.service.CommandUserService;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -26,6 +29,14 @@ public class CommandUserController {
             @Valid @ModelAttribute UpdateProfileRequest request
     ) {
         commandUserService.updateProfile(request, UserFacade.getCurrentUser());
+    }
+
+    @PatchMapping("/picture")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePicture(
+            @Valid @ModelAttribute UpdatePictureRequest request
+    ) throws IOException {
+        commandUserService.updatePicture(request, UserFacade.getCurrentUser());
     }
 
     @PatchMapping("/notification")

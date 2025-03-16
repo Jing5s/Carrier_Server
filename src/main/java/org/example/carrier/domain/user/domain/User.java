@@ -44,6 +44,11 @@ public class User extends BaseEntity {
         return this;
     }
 
+    public User updatePicture(String picture) {
+        this.picture = picture;
+        return this;
+    }
+
     public void updateGoogleRefreshToken(String googleRefreshToken) {
         this.googleRefreshToken = googleRefreshToken;
     }

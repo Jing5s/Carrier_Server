@@ -20,8 +20,11 @@ public class NextCloudService {
     private final NextcloudUploadClient nextcloudUploadClient;
     private final NextcloudShareClient nextcloudShareClient;
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+    private final String fileNameTemplate = "%s-%s-%s";
+
+    public String uploadFile(MultipartFile file, Long userId) throws IOException {
+        String fileName = fileNameTemplate
+                .formatted(UUID.randomUUID(), userId, file.getOriginalFilename());
         byte[] fileData = file.getBytes();
 
         String authHeader = "Basic " + Base64.getEncoder()
@@ -34,6 +37,6 @@ public class NextCloudService {
                 authHeader, "true", "application/json",
                 "/" + fileName, 3, 1);
 
-        return shareUrlResponse.getUrl();
+        return shareUrlResponse.getUrl() + "/download";
     }
 }
