@@ -43,6 +43,7 @@ gpt:
   token: ${GPT.TOKEN}
 
 nextcloud:
-  base-url: ${NEXTCLOUD.BASE.URL}
+  upload-base-url: ${NEXTCLOUD.BASE.URL.UPLOAD}
+  share-base-url: ${NEXTCLOUD.BASE.URL.SHARE}
   username: ${NEXTCLOUD.USERNAME}
   password: ${NEXTCLOUD.PASSWORD}

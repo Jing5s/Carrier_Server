@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "nextcloud-upload", url = "${nextcloud.base-url}")
+@FeignClient(name = "nextcloud-upload", url = "${nextcloud.upload-base-url}")
 public interface NextcloudUploadClient {
 
     @PutMapping(value = "/remote.php/dav/files/carrier/{fileName}",
