@@ -18,6 +18,10 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
 
   data:
     redis:
@@ -43,7 +47,6 @@ gpt:
   token: ${GPT.TOKEN}
 
 nextcloud:
-  upload-base-url: ${NEXTCLOUD.BASE.URL.UPLOAD}
-  share-base-url: ${NEXTCLOUD.BASE.URL.SHARE}
+  base-url: ${NEXTCLOUD.BASE.URL}
   username: ${NEXTCLOUD.USERNAME}
   password: ${NEXTCLOUD.PASSWORD}
