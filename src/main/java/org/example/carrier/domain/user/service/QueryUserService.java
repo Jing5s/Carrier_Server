@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.calendar.domain.repository.CustomScheduleRepository;
 import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
-import org.example.carrier.domain.mail.domain.repository.CustomMailRepository;
+import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.todo.domain.repository.TodoRepository;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.domain.user.presentation.dto.response.TodaySummaryResponse;
@@ -32,13 +32,15 @@ public class QueryUserService {
     private final TodoRepository todoRepository;
     private final CustomScheduleRepository scheduleRepository;
     private final CategoryRepository categoryRepository;
-    private final CustomMailRepository mailRepository;
+    private final MailRepository mailRepository;
     private final GptClient gptClient;
     private final GptProperties gptProperties;
     private final ObjectMapper objectMapper;
 
     public UserProfileResponse getUserInfo(User cuser) {
-        return new UserProfileResponse(cuser);
+        Boolean isSurvey = mailRepository.existsByUser(cuser);
+
+        return new UserProfileResponse(cuser, isSurvey);
     }
 
     public TodaySummaryResponse getTodaySummary(User cUser) throws JsonProcessingException {

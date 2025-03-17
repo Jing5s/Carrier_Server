@@ -6,14 +6,16 @@ import org.example.carrier.domain.user.domain.User;
 import java.time.LocalTime;
 
 public record UserProfileResponse(
+        Boolean isSurvey,
         String email,
         String nickname,
         String picture,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         LocalTime notificationTime
 ) {
-    public UserProfileResponse(User user) {
+    public UserProfileResponse(User user, Boolean isSurvey) {
         this(
+                isSurvey,
                 user.getEmail(),
                 user.getNickname(),
                 user.getPicture(),
