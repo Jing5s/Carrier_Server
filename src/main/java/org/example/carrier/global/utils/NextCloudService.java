@@ -37,6 +37,8 @@ public class NextCloudService {
                 authHeader, "true", "application/json",
                 "/" + fileName, 3, 1);
 
-        return shareUrlResponse.getUrl() + "/download";
+        return shareUrlResponse.getUrl()
+                .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr")
+                + "/download";
     }
 }

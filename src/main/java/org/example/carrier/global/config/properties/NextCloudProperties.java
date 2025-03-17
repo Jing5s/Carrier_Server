@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @RequiredArgsConstructor
 @ConfigurationProperties("nextcloud")
 public class NextCloudProperties {
+    private final String baseUrl;
     private final String username;
     private final String password;
 }
