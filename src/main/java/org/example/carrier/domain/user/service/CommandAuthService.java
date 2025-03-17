@@ -74,7 +74,7 @@ public class CommandAuthService {
             return true;
         } else {
             user.get().updateGoogleRefreshToken(refreshToken);
-            return true;
+            return false;
         }
     }
 
