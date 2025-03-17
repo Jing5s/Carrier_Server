@@ -34,4 +34,8 @@ public class CommandUserService {
         User updateUser = cUser.updateNotificationTime(request.time());
         userRepository.save(updateUser);
     }
+
+    public void deleteUser(User cUser) {
+        userRepository.delete(cUser);
+    }
 }

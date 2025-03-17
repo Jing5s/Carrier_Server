@@ -8,6 +8,7 @@ import org.example.carrier.domain.user.presentation.dto.request.UpdatePictureReq
 import org.example.carrier.domain.user.presentation.dto.request.UpdateProfileRequest;
 import org.example.carrier.domain.user.service.CommandUserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +46,11 @@ public class CommandUserController {
             @Valid @RequestBody UpdateNotificationRequest request
     ) {
         commandUserService.updateNotification(request, UserFacade.getCurrentUser());
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser() {
+        commandUserService.deleteUser(UserFacade.getCurrentUser());
     }
 }
