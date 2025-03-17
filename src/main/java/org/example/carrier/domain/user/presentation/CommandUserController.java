@@ -26,7 +26,7 @@ public class CommandUserController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProfile(
-            @Valid @ModelAttribute UpdateProfileRequest request
+            @Valid @RequestBody UpdateProfileRequest request
     ) {
         commandUserService.updateProfile(request, UserFacade.getCurrentUser());
     }
