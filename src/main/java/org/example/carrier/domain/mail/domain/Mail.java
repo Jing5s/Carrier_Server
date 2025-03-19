@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.entity.BaseEntity;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@ToString
 @Table(name = "tbl_mail")
 public class Mail extends BaseEntity {
     @Column(name = "gmail_id", nullable = false, unique = true)

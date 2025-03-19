@@ -3,6 +3,7 @@ package org.example.carrier.domain.mail.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.mail.domain.repository.MailRepository;
 import org.example.carrier.domain.mail.exception.MailNotFoundException;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CustomService
+@Slf4j
 public class CommandMailService {
     private final MailRepository mailRepository;
     private final GmailAPIClient gmailAPIClient;
@@ -87,7 +89,7 @@ public class CommandMailService {
                     .anyMatch(exclusionLabels::contains)) {
                 return;
             }
-
+            log.info(toMail(gmailDetail, cUser).toString());
             mailRepository.save(toMail(gmailDetail, cUser));
         });
     }
