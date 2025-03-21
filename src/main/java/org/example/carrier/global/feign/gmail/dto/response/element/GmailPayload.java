@@ -13,7 +13,7 @@ public record GmailPayload(
     }
 
     public String getTo() {
-        return getHeaderValue(headers, "To");
+        return getHeaderValue(headers, "Delivered-To");
     }
 
     public String getSubject() {
