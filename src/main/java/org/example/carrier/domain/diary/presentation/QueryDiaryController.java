@@ -1,11 +1,14 @@
 package org.example.carrier.domain.diary.presentation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.carrier.domain.diary.presentation.dto.request.DiaryRecommendRequest;
 import org.example.carrier.domain.diary.presentation.dto.request.GetDiariesRequest;
 import org.example.carrier.domain.diary.presentation.dto.response.DiaryResponse;
 import org.example.carrier.domain.diary.service.QueryDiaryService;
 import org.example.carrier.domain.user.facade.UserFacade;
+import org.example.carrier.global.feign.gpt.dto.response.GptDiaryRecommendResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,5 +35,12 @@ public class QueryDiaryController {
             @Valid @ModelAttribute GetDiariesRequest request
     ) {
         return queryDiaryService.getDiaries(request, UserFacade.getCurrentUser());
+    }
+
+    @GetMapping("/recommend")
+    public GptDiaryRecommendResponse getRecommend(
+            @ModelAttribute DiaryRecommendRequest request
+    ) throws JsonProcessingException {
+        return queryDiaryService.getRecommend(request, UserFacade.getCurrentUser());
     }
 }

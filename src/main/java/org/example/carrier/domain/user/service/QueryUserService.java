@@ -50,7 +50,7 @@ public class QueryUserService {
 
         List<ScheduleElement> schedules = getTodaySchedules(cUser);
 
-        List<MailElement> mails = mailRepository.findAllByTodayAndUser(cUser).stream()
+        List<MailElement> mails = mailRepository.findAllByUserAndDate(LocalDate.now(), cUser).stream()
                 .map(MailElement::from)
                 .toList();
 

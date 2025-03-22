@@ -6,6 +6,7 @@ import org.example.carrier.domain.mail.domain.Mail;
 import org.example.carrier.domain.user.domain.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class CustomMailRepositoryImpl implements CustomMailRepository {
     }
 
     @Override
-    public List<Mail> findAllByTodayAndUser(User user) {
-        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+    public List<Mail> findAllByUserAndDate(LocalDate date, User user) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay().minusSeconds(1);
 
         return queryFactory
                 .selectFrom(mail)
