@@ -20,7 +20,7 @@ import org.example.carrier.global.annotation.CustomService;
 import org.example.carrier.global.config.properties.GptProperties;
 import org.example.carrier.global.feign.gpt.GptClient;
 import org.example.carrier.global.feign.gpt.dto.request.GptBasicRequest;
-import org.example.carrier.global.feign.gpt.dto.request.GptTodayTipsRequest;
+import org.example.carrier.global.feign.gpt.dto.request.GptDiaryRecommendRequest;
 import org.example.carrier.global.feign.gpt.dto.request.element.MailElement;
 import org.example.carrier.global.feign.gpt.dto.request.element.ScheduleElement;
 import org.example.carrier.global.feign.gpt.dto.request.element.TodoElement;
@@ -60,8 +60,6 @@ public class QueryDiaryService {
     }
 
     public GptDiaryRecommendResponse getRecommend(DiaryRecommendRequest request, User cUser) throws JsonProcessingException {
-
-
         List<TodoElement> todos = todoRepository.findAllByDateAndUser(request.date(), cUser).stream()
                 .map(TodoElement::from)
                 .toList();
@@ -72,8 +70,9 @@ public class QueryDiaryService {
                 .map(MailElement::from)
                 .toList();
 
-        GptBasicRequest gptRequest = GptTodayTipsRequest.of(objectMapper, schedules, todos, mails);
-        GptBasicResponse gptResponse = gptClient.getGptResponse(gptProperties.getToken(), gptRequest);
+        GptBasicRequest gptRequest = GptDiaryRecommendRequest.of(objectMapper, schedules, todos, mails);
+        GptBasicResponse gptResponse = gptClient
+                .getGptResponse("Bearer " + gptProperties.getToken(), gptRequest);
 
         return (GptDiaryRecommendResponse) gptResponse.getResponse(objectMapper, GptDiaryRecommendResponse.class);
     }
