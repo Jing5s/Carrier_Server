@@ -6,6 +6,7 @@ import org.example.carrier.domain.category.presentation.dto.response.GetCategori
 import java.time.LocalDateTime;
 
 public record GetSchedulesResponse(
+        Long id,
         String title,
         Boolean allDay,
         Boolean isRepeat,
@@ -17,7 +18,7 @@ public record GetSchedulesResponse(
 ) {
     public GetSchedulesResponse(Schedule schedule) {
         this(
-                schedule.getTitle(), schedule.getAllDay(), schedule.getIsRepeat(),
+                schedule.getId(), schedule.getTitle(), schedule.getAllDay(), schedule.getIsRepeat(),
                 schedule.getMemo(), schedule.getStartDate(), schedule.getEndDate(),
                 new GetCategoriesResponse(schedule.getCategory()), schedule.getLocation()
         );
