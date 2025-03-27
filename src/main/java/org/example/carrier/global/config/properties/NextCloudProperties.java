@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @RequiredArgsConstructor
-@ConfigurationProperties("carrier.nextcloud")
+@ConfigurationProperties("nextcloud")
 public class NextCloudProperties {
     private final String baseUrl;
     private final String username;
