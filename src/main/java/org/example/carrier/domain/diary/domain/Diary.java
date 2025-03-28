@@ -25,7 +25,7 @@ public class Diary extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false, length = 1)
+    @Column(nullable = false, length = 5)
     private String emoji;
 
     @Column(nullable = false)
