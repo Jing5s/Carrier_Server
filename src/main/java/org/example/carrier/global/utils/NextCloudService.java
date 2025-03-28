@@ -1,7 +1,6 @@
 package org.example.carrier.global.utils;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.carrier.global.config.properties.NextCloudProperties;
 import org.example.carrier.global.feign.nextcloud.NextcloudShareClient;
 import org.example.carrier.global.feign.nextcloud.NextcloudUploadClient;
@@ -16,7 +15,6 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
-@Slf4j
 public class NextCloudService {
     private final NextCloudProperties nextCloudProperties;
     private final NextcloudUploadClient nextcloudUploadClient;
@@ -25,8 +23,6 @@ public class NextCloudService {
     private final String fileNameTemplate = "%s-%s-%s";
 
     public String uploadFile(MultipartFile file, Long userId) throws IOException {
-        log.info("user {}, password {}", nextCloudProperties.getUsername(), nextCloudProperties.getPassword());
-
         String fileName = fileNameTemplate
                 .formatted(UUID.randomUUID(), userId, file.getOriginalFilename());
         byte[] fileData = file.getBytes();
