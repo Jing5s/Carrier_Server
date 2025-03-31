@@ -38,7 +38,6 @@ public class NextCloudService {
                 "/" + fileName, 3, 1);
 
         return shareUrlResponse.getUrl()
-                .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr")
-                + "/download";
+                .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr");
     }
 }
