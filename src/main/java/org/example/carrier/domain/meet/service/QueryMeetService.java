@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.meet.domain.Meet;
 import org.example.carrier.domain.meet.domain.repository.MeetRepository;
 import org.example.carrier.domain.meet.exception.MeetNotFoundException;
+import org.example.carrier.domain.meet.presentation.dto.response.GetMeetsResponse;
 import org.example.carrier.domain.meet.presentation.dto.response.MeetSummaryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CustomService(readOnly = true)
@@ -18,5 +22,11 @@ public class QueryMeetService {
                 .orElseThrow(() -> MeetNotFoundException.EXCEPTION);
 
         return MeetSummaryResponse.of(meet);
+    }
+
+    public List<GetMeetsResponse> getMeets(User cUser) {
+        return meetRepository.findAllByUser(cUser).stream()
+                .map(GetMeetsResponse::of)
+                .collect(Collectors.toList());
     }
 }
