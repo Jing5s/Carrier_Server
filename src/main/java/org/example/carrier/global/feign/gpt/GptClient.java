@@ -22,6 +22,7 @@ public interface GptClient {
     @PostMapping(value = "/audio/transcriptions", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     GptMeetTextResponse getMeetText(
             @RequestHeader("Authorization") String access_token,
-            @RequestPart("file") MultipartFile file
+            @RequestPart("file") MultipartFile file,
+            @RequestPart("model") String model
     );
 }
