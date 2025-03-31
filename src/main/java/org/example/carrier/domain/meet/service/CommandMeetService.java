@@ -46,6 +46,7 @@ public class CommandMeetService {
                         result.title(),
                         meetText.text(),
                         result.text(),
+                        request.time(),
                         cUser
                 )
         );

@@ -25,14 +25,17 @@ public class Meet extends BaseEntity {
     @Column(name = "summary_text", columnDefinition = "TEXT")
     private String summaryText;
 
+    private String time;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Meet(String title, String text, String summaryText, User user) {
+    public Meet(String title, String text, String summaryText, String time, User user) {
         this.title = title;
         this.text = text;
         this.summaryText = summaryText;
+        this.time = time;
         this.user = user;
     }
 }
