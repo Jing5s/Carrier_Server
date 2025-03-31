@@ -10,6 +10,9 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND(404, "USER-404-1", "User Not Found."),
 
+    // meet
+    MEET_NOT_FOUND(404, "MEET-404-1", "Meet Not Found."),
+
     // diary
     DIARY_NOT_FOUND(404, "DIARY-404-1", "Diary Not Found."),
     DIARY_IS_WRITE(400, "DIARY-400-2", "Diary Is Write."),
