@@ -9,11 +9,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.val;
 import org.example.carrier.domain.calendar.domain.Schedule;
 import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.diary.domain.Diary;
 import org.example.carrier.domain.mail.domain.Mail;
+import org.example.carrier.domain.meet.domain.Meet;
 import org.example.carrier.domain.todo.domain.Todo;
 import org.example.carrier.global.entity.BaseEntity;
 
@@ -55,6 +55,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Meet> meets = new ArrayList<>();
 
     @Builder
     public User(String email, String nickname, String picture, String googleRefreshToken) {
