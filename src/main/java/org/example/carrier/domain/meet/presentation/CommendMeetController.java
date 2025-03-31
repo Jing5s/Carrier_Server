@@ -1,6 +1,5 @@
 package org.example.carrier.domain.meet.presentation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.meet.presentation.dto.request.MeetSummaryRequest;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @RequestMapping("/meets")
 @RestController
@@ -25,7 +26,7 @@ public class CommendMeetController {
     @PostMapping
     public MeetSummaryResponse meetSummary(
             @Valid @ModelAttribute MeetSummaryRequest request
-    ) throws JsonProcessingException {
+    ) throws IOException {
         return commandMeetService.meetSummary(request, UserFacade.getCurrentUser());
     }
 
