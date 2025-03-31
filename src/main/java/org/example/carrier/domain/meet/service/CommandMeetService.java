@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.meet.domain.Meet;
 import org.example.carrier.domain.meet.domain.repository.MeetRepository;
+import org.example.carrier.domain.meet.exception.MeetNotFoundException;
 import org.example.carrier.domain.meet.presentation.dto.request.MeetSummaryRequest;
 import org.example.carrier.domain.meet.presentation.dto.response.MeetSummaryResponse;
 import org.example.carrier.domain.user.domain.User;
@@ -50,5 +51,12 @@ public class CommandMeetService {
         );
 
         return MeetSummaryResponse.of(meet);
+    }
+
+    public void deleteMeet(Long id, User cUser) {
+        Meet meet = meetRepository.findByIdAndUser(id, cUser)
+                .orElseThrow(() -> MeetNotFoundException.EXCEPTION);
+
+        meetRepository.delete(meet);
     }
 }
