@@ -1,6 +1,5 @@
 package org.example.carrier.domain.meet.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.meet.domain.Meet;
@@ -17,6 +16,9 @@ import org.example.carrier.global.feign.gpt.dto.request.GptMeetSummaryRequest;
 import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMeetSummeryResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMeetTextResponse;
+import org.example.carrier.global.utils.NextCloudService;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @CustomService
@@ -25,12 +27,15 @@ public class CommandMeetService {
     private final GptClient gptClient;
     private final GptProperties gptProperties;
     private final ObjectMapper objectMapper;
+    private final NextCloudService nextCloudService;
 
-    public MeetSummaryResponse meetSummary(MeetSummaryRequest request, User cUser) throws JsonProcessingException {
+    public MeetSummaryResponse meetSummary(MeetSummaryRequest request, User cUser) throws IOException {
         GptMeetTextResponse meetText = gptClient.getMeetText(
                 "Bearer " + gptProperties.getToken(),
                 request.file(), "gpt-4o-transcribe"
         );
+
+        String audioLink = nextCloudService.uploadFile(request.file(), cUser.getId());
 
         GptBasicRequest gptBasicRequest
                 = GptBasicRequest.meetSummary(objectMapper, new GptMeetSummaryRequest(meetText.text()));
@@ -47,6 +52,7 @@ public class CommandMeetService {
                         meetText.text(),
                         result.text(),
                         request.time(),
+                        audioLink,
                         cUser
                 )
         );
