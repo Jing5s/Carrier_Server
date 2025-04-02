@@ -24,7 +24,7 @@ public class CommandUserService {
     }
 
     public void updatePicture(@Valid UpdatePictureRequest request, User cUser) throws IOException {
-        String imageUrl = nextCloudService.uploadFile(request.picture(), cUser.getId()) + "/download";
+        String imageUrl = nextCloudService.uploadFile(request.picture(), cUser.getId()).uploadUrl();
         User updateUser = cUser.updatePicture(imageUrl);
 
         userRepository.save(updateUser);

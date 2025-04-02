@@ -2,9 +2,11 @@ package org.example.carrier.global.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.global.config.properties.NextCloudProperties;
+import org.example.carrier.global.feign.nextcloud.NextcloudFilesClient;
 import org.example.carrier.global.feign.nextcloud.NextcloudShareClient;
-import org.example.carrier.global.feign.nextcloud.NextcloudUploadClient;
 import org.example.carrier.global.feign.nextcloud.dto.response.ShareUrlResponse;
+import org.example.carrier.global.utils.dto.response.UploadFileResponse;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,27 +19,41 @@ import java.util.UUID;
 @Component
 public class NextCloudService {
     private final NextCloudProperties nextCloudProperties;
-    private final NextcloudUploadClient nextcloudUploadClient;
+    private final NextcloudFilesClient nextcloudFilesClient;
     private final NextcloudShareClient nextcloudShareClient;
 
     private final String fileNameTemplate = "%s-%s-%s";
 
-    public String uploadFile(MultipartFile file, Long userId) throws IOException {
+    public Resource getFile(String fileName) {
+        String authHeader = getAuthHeader();
+
+        return nextcloudFilesClient.getFile(fileName, authHeader);
+    }
+
+    public UploadFileResponse uploadFile(MultipartFile file, Long userId) throws IOException {
         String fileName = fileNameTemplate
                 .formatted(UUID.randomUUID(), userId, file.getOriginalFilename());
         byte[] fileData = file.getBytes();
 
-        String authHeader = "Basic " + Base64.getEncoder()
-                .encodeToString((nextCloudProperties.getUsername() + ":" + nextCloudProperties.getPassword())
-                .getBytes(StandardCharsets.UTF_8));
+        String authHeader = getAuthHeader();
 
-        nextcloudUploadClient.uploadFile(fileName, fileData, authHeader);
+        nextcloudFilesClient.uploadFile(fileName, fileData, authHeader);
 
         ShareUrlResponse shareUrlResponse = nextcloudShareClient.createPublicShare(
                 authHeader, "true", "application/json",
                 "/" + fileName, 3, 1);
 
-        return shareUrlResponse.getUrl()
-                .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr");
+        return new UploadFileResponse(
+                fileName,
+                shareUrlResponse.getUrl()
+                        .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr")
+                        + "/download"
+        );
+    }
+
+    private String getAuthHeader() {
+        return "Basic " + Base64.getEncoder()
+                .encodeToString((nextCloudProperties.getUsername() + ":" + nextCloudProperties.getPassword())
+                        .getBytes(StandardCharsets.UTF_8));
     }
 }

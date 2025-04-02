@@ -8,6 +8,8 @@ import org.example.carrier.domain.meet.presentation.dto.response.GetMeetsRespons
 import org.example.carrier.domain.meet.presentation.dto.response.MeetSummaryResponse;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
+import org.example.carrier.global.utils.NextCloudService;
+import org.springframework.core.io.Resource;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @CustomService(readOnly = true)
 public class QueryMeetService {
     private final MeetRepository meetRepository;
+    private final NextCloudService nextCloudService;
 
     public MeetSummaryResponse getMeet(Long id, User cUser) {
         Meet meet = meetRepository.findByIdAndUser(id, cUser)
@@ -28,5 +31,12 @@ public class QueryMeetService {
         return meetRepository.findAllByUser(cUser).stream()
                 .map(GetMeetsResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    public Resource getAudioFile(Long id, User cUser) {
+        Meet meet = meetRepository.findByIdAndUser(id, cUser)
+                .orElseThrow(() -> MeetNotFoundException.EXCEPTION);
+
+        return nextCloudService.getFile(meet.getFileName());
     }
 }

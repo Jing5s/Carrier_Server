@@ -15,7 +15,7 @@ import org.example.carrier.global.entity.BaseEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "meets")
+@Table(name = "tbl_meet")
 public class Meet extends BaseEntity {
     private String title;
 
@@ -30,16 +30,20 @@ public class Meet extends BaseEntity {
     @Column(name = "audio_link")
     private String audioLink;
 
+    @Column(name = "file_name")
+    private String fileName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Meet(String title, String text, String summaryText, String time, String audioLink, User user) {
+    public Meet(String title, String text, String summaryText, String time, String audioLink, String fileName, User user) {
         this.title = title;
         this.text = text;
         this.summaryText = summaryText;
         this.time = time;
         this.audioLink = audioLink;
+        this.fileName = fileName;
         this.user = user;
     }
 }

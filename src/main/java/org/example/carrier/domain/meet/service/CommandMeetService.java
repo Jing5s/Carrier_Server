@@ -17,6 +17,7 @@ import org.example.carrier.global.feign.gpt.dto.response.GptBasicResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMeetSummeryResponse;
 import org.example.carrier.global.feign.gpt.dto.response.GptMeetTextResponse;
 import org.example.carrier.global.utils.NextCloudService;
+import org.example.carrier.global.utils.dto.response.UploadFileResponse;
 
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class CommandMeetService {
                 request.file(), "gpt-4o-transcribe"
         );
 
-        String audioLink = nextCloudService.uploadFile(request.file(), cUser.getId());
+        UploadFileResponse uploadFile = nextCloudService.uploadFile(request.file(), cUser.getId());
 
         GptBasicRequest gptBasicRequest
                 = GptBasicRequest.meetSummary(objectMapper, new GptMeetSummaryRequest(meetText.text()));
@@ -52,7 +53,8 @@ public class CommandMeetService {
                         meetText.text(),
                         result.text(),
                         request.time(),
-                        audioLink,
+                        uploadFile.uploadUrl(),
+                        uploadFile.fileName(),
                         cUser
                 )
         );
