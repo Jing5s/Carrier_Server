@@ -1,5 +1,6 @@
 package org.example.carrier.domain.todo.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.todo.domain.Todo;
 import org.example.carrier.domain.todo.domain.repository.TodoRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 public class QueryTodoService {
     private final TodoRepository todoRepository;
 
-    public List<TodoResponse> getTodos(GetTodosRequest request, User cUser) {
+    public List<TodoResponse> getTodos(@Valid GetTodosRequest request, User cUser) {
         List<Todo> todos = todoRepository.findScheduleByDate(
                 request.startDate(), request.endDate(), cUser);
 

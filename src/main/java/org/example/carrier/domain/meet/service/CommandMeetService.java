@@ -1,6 +1,7 @@
 package org.example.carrier.domain.meet.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.meet.domain.Meet;
 import org.example.carrier.domain.meet.domain.repository.MeetRepository;
@@ -30,7 +31,7 @@ public class CommandMeetService {
     private final ObjectMapper objectMapper;
     private final NextCloudService nextCloudService;
 
-    public MeetSummaryResponse meetSummary(MeetSummaryRequest request, User cUser) throws IOException {
+    public MeetSummaryResponse meetSummary(@Valid MeetSummaryRequest request, User cUser) throws IOException {
         GptMeetTextResponse meetText = gptClient.getMeetText(
                 "Bearer " + gptProperties.getToken(),
                 request.file(), "gpt-4o-transcribe"
