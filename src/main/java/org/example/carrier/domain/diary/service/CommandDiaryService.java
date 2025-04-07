@@ -19,7 +19,7 @@ public class CommandDiaryService {
     private final DiaryRepository diaryRepository;
 
     public Long createDiary(@Valid CreateDiaryRequest request, User cUser) {
-        Boolean isWrite = diaryRepository.existsByDate(LocalDate.now());
+        Boolean isWrite = diaryRepository.existsByDateAndUser(LocalDate.now(), cUser);
         if (isWrite) { throw DiaryIsWriteException.EXCEPTION; }
 
         return diaryRepository.save(request.toDiary(cUser)).getId();
