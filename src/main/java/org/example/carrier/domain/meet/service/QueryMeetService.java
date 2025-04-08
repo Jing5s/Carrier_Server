@@ -28,7 +28,7 @@ public class QueryMeetService {
     }
 
     public List<GetMeetsResponse> getMeets(User cUser) {
-        return meetRepository.findAllByUser(cUser).stream()
+        return meetRepository.findAllMeetsDesc(cUser).stream()
                 .map(GetMeetsResponse::of)
                 .collect(Collectors.toList());
     }

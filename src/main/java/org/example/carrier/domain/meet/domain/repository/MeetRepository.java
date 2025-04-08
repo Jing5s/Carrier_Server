@@ -4,10 +4,8 @@ import org.example.carrier.domain.meet.domain.Meet;
 import org.example.carrier.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface MeetRepository extends JpaRepository<Meet, Long> {
+public interface MeetRepository extends JpaRepository<Meet, Long>, CustomMeetRepository {
     Optional<Meet> findByIdAndUser(Long id, User user);
-    List<Meet> findAllByUser(User user);
 }
