@@ -40,6 +40,11 @@ public class Category extends BaseEntity {
         this.user = user;
     }
 
+    public void update(String name, Color color) {
+        this.name = name;
+        this.color = color;
+    }
+
     public void changeActiveStatus() {
         active = !active;
     }

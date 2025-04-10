@@ -3,6 +3,7 @@ package org.example.carrier.domain.category.presentation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.carrier.domain.category.presentation.dto.request.AddCategoryRequest;
+import org.example.carrier.domain.category.presentation.dto.request.UpdateCategoryRequest;
 import org.example.carrier.domain.category.service.CommandCategoryService;
 import org.example.carrier.domain.user.facade.UserFacade;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,16 @@ public class CommandCategoryController {
         commandCategoryService.createCategory(request, UserFacade.getCurrentUser());
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateCategory(
+            @Valid @RequestBody UpdateCategoryRequest request
+    ) {
+        commandCategoryService.updateCategory(request, UserFacade.getCurrentUser());
+    }
+
     @PatchMapping("/change/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changeActiveStatus(
             @PathVariable Long id
     ) {

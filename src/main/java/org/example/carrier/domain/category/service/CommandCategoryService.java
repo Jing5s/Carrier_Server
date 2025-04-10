@@ -6,6 +6,7 @@ import org.example.carrier.domain.category.domain.Category;
 import org.example.carrier.domain.category.domain.repository.CategoryRepository;
 import org.example.carrier.domain.category.exception.CategoryNotFoundException;
 import org.example.carrier.domain.category.presentation.dto.request.AddCategoryRequest;
+import org.example.carrier.domain.category.presentation.dto.request.UpdateCategoryRequest;
 import org.example.carrier.domain.user.domain.User;
 import org.example.carrier.global.annotation.CustomService;
 
@@ -16,6 +17,13 @@ public class CommandCategoryService {
 
     public void createCategory(@Valid AddCategoryRequest request, User cUser) {
         categoryRepository.save(request.toCategory(cUser));
+    }
+
+    public void updateCategory(UpdateCategoryRequest request, User cUser) {
+        Category category = categoryRepository.findByIdAndUser(request.id(), cUser)
+                .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
+
+        category.update(request.name(), request.color());
     }
 
     public void changeActiveStatus(Long id, User cUser) {
