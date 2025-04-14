@@ -24,7 +24,7 @@ public class CommandTodoService {
                 .orElseThrow(() -> TodoNotFoundException.EXCEPTION);
 
         todo.update(request.title(), request.date(), request.isRepeat(),
-                request.priority(), request.memo(), request.memo());
+                request.priority(), request.memo(), request.location());
     }
 
     public void changeDoneStatus(Long id, User cUser) {
