@@ -11,9 +11,12 @@ public record TodoResponse(
         Boolean isDone,
         String memo,
         Priority priority,
-        LocalDate date
+        LocalDate date,
+        String location
 ) {
-    public TodoResponse(Todo todo) {
-        this(todo.getId(), todo.getTitle(), todo.getIsDone(), todo.getMemo(), todo.getPriority(), todo.getDate());
+    public static TodoResponse of(Todo todo) {
+        return new TodoResponse(
+                todo.getId(), todo.getTitle(), todo.getIsDone(),
+                todo.getMemo(), todo.getPriority(), todo.getDate(), todo.getLocation());
     }
 }

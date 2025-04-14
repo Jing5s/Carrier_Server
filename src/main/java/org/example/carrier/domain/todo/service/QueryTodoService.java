@@ -21,7 +21,7 @@ public class QueryTodoService {
                 request.startDate(), request.endDate(), cUser);
 
         return todos.stream()
-                .map(TodoResponse::new)
+                .map(TodoResponse::of)
                 .toList();
     }
 }
