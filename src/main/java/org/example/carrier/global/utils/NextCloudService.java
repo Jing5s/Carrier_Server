@@ -46,7 +46,7 @@ public class NextCloudService {
         return new UploadFileResponse(
                 fileName,
                 shareUrlResponse.getUrl()
-                        .replace(nextCloudProperties.getBaseUrl(), "https://nas.anys.kro.kr")
+                        .replace(nextCloudProperties.getBaseUrl(), "https://cloud.jamkris.kro.kr")
                         + "/download"
         );
     }
