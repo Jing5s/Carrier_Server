@@ -29,7 +29,10 @@ AI가 일정, 메일, 회고, 회의를 간편화해 **업무를 간편하게 �
 
 ## 기술 도입
 
-기술 스택 : Java 17, Spring Boot 3.4.1, Querydsl, MySQL 
+
+![Java](https://img.shields.io/badge/Java-17-007396?logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-6DB33F?logo=springboot)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
 
 ### CQRS 패턴 사용
 CQRS 패턴을 적용하여서 조회 로직과 명령 로직을 분리하여 도메인별 책임 명확화  
@@ -62,6 +65,7 @@ org.example.carrier
         │       ├── request
         │       └── response
         └── exception
+        └── ... (category, diary, mail, meet, todo, user)
 ```
 
 @CustomService라는 annotation을 만들어 Query/Command의 의도를
