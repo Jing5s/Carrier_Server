@@ -33,6 +33,7 @@ AI가 일정, 메일, 회고, 회의를 간편화해 **업무를 간편하게 �
 ![Java](https://img.shields.io/badge/Java-17-007396?logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-6DB33F?logo=springboot)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
+![Querydsl](https://img.shields.io/badge/Querydsl-3E87D0?logo=https://avatars.githubusercontent.com/u/7044479?s=200&v=4)
 
 ### CQRS 패턴 사용
 CQRS 패턴을 적용하여서 조회 로직과 명령 로직을 분리하여 도메인별 책임 명확화  
@@ -97,6 +98,14 @@ org.example.carrier
 
 ## ERD
 ![erd](https://i.postimg.cc/2S6dTNmh/image.png)
+
+## 화면 설계
+
+|                              메인 페이지                              |                              메일 페이지                              |
+|:----------------------------------------------------------------:|:----------------------------------------------------------------:|
+|   <img width="329" src="https://i.postimg.cc/0j6C2N10/1.png"/>   | <img width="329" src="https://i.postimg.cc/h4wrZVVy/image.png"/> |  
+|                             하루 일정 요약                             |                            녹음 요약 페이지                             |  
+| <img width="329" src="https://i.postimg.cc/P5bQqc99/image.png"/> | <img width="329" src="https://i.postimg.cc/s2V9GmRX/image.png"/> |
 
 ## 팀원
 |                             Backend                             |                               Frontend                               |                               Frontend                               |                            Frontend                             |                            Designer                             |
